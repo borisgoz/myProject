@@ -1,0 +1,40 @@
+HDs/TEST.img: UUID="e0503c59-6969-46ee-888c-d0224e26005d" TYPE="ext4"
+$ cat UUID_TEST_IMG | grep HDs/TEST.img | awk '{print $2}' | awk -F '"' '{print $2}'
+/dev/loop0: UUID="e0503c59-6969-46ee-888c-d0224e26005d" TYPE="ext4"
+$ sudo lsblk -f
+
+uuidgen
+39ea80c4-e748-47eb-835c-64025de53e26
+umount /dev/sdb1
+e2fsck -f /dev/sdb1
+tune2fs /dev/sdb1 -U 39ea80c4-e748-47eb-835c-64025de53e26
+blkid /dev/sdb1
+mount /dev/sdb1
+
+
+how2 set disk partition uuid
+
+## Generate UUID using uuidgen
+$ uuidgen
+$ cat /proc/sys/kernel/random/uuid
+5c27b2b3-58f4-4469-a717-45865f517400
+
+$ sudo umount /dev/sdb1
+
+## Run filesystem check on the partition
+$ sudo e2fsck -f /dev/sdb1
+e2fsck 1.44.6 (5-Mar-2019)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/sdb1: 11/1310720 files (0.0% non-contiguous), 126322/5242624 blocks
+
+$ sudo tune2fs /dev/sdb1 -U 39ea80c4-e748-47eb-835c-64025de53e26
+tune2fs 1.44.6 (5-Mar-2019)
+Setting the UUID on this filesystem could take some time.
+Proceed anyway (or wait 5 seconds to proceed) ? (y,N) y
+
+$ sudo blkid /dev/sdb1
+/dev/sdb1: UUID="39ea80c4-e748-47eb-835c-64025de53e26" TYPE="ext4" PARTUUID="2c6a7a3a-01"
