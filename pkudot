@@ -1,0 +1,47 @@
+boris@ubuntu:~$ cat passwd | grep boris > stam
+boris@ubuntu:~$ cat stam
+boris:x:1000:1000:boris:/home/boris:/bin/bash
+boris@ubuntu:~$
+boris@ubuntu:~$ cat passwd | grep boris >stam
+boris@ubuntu:~$ cat stam
+boris:x:1000:1000:boris:/home/boris:/bin/bash
+boris@ubuntu:~$
+boris@ubuntu:~$ cat passwd | greap boris >>stam 2>&1
+boris@ubuntu:~$ cat stam
+boris:x:1000:1000:boris:/home/boris:/bin/bash
+
+Command 'greap' not found, did you mean:
+
+  command 'grep' from deb grep (3.4-1)
+  command 'grap' from deb grap (1.45-1build1)
+
+Try: sudo apt install <deb name>
+
+boris@ubuntu:~$
+boris@ubuntu:~$ sort -o newfile stam &
+[1] 11781
+boris@ubuntu:~$
+[1]+  Done                    sort -o newfile stam
+boris@ubuntu:~$ cat newfile
+
+
+
+
+boris:x:1000:1000:boris:/home/boris:/bin/bash
+  command 'grap' from deb grap (1.45-1build1)
+Command 'greap' not found, did you mean:
+  command 'grep' from deb grep (3.4-1)
+Try: sudo apt install <deb name>
+boris@ubuntu:~$
+boris@ubuntu:~$ tac newfile
+Try: sudo apt install <deb name>
+  command 'grep' from deb grep (3.4-1)
+Command 'greap' not found, did you mean:
+  command 'grap' from deb grap (1.45-1build1)
+boris:x:1000:1000:boris:/home/boris:/bin/bash
+
+
+
+
+boris@ubuntu:~$
+
