@@ -1,0 +1,9 @@
+$ ssh-keygen
+$ cat ~/.ssh/id_rsa.pub
+copy to web. user > settings > ssh and gpg keys > new ssh key
+$ mkdir mygit
+$ cd mygit
+$ git c
+$ git clone git@github.com:borisgoz/myProject.git
+$ git pull
+$ git push
