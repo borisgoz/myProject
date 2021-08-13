@@ -1,0 +1,38 @@
+#!/bin/bash
+
+## kernel module overlay.ko must be installed
+## script /sbin/init-ro
+
+mount -t proc proc /proc
+mount -t tmpfs inittemp /mnt
+mkdir /mnt/lower
+mkdir /mnt/rw
+mount -t tmpfs root-rw /mnt/rw
+mkdir /mnt/rw/upper
+mkdir /mnt/rw/work
+mkdir /mnt/newroot
+rootDev=`awk '$2 == "/" {print $1}' /etc/fstab`
+rootMountOpt=`awk '$2 == "/" {print $4}' /etc/fstab`
+rootFsType=`awk '$2 == "/" {print $3}' /etc/fstab`
+mount -t ${rootFsType} -o ${rootMountOpt},ro ${rootDev} /mnt/lower
+mount -t overlay -o lowerdir=/mnt/lower,upperdir=/mnt/rw/upper,workdir=/mnt/rw/work overlayfs-root /mnt/newroot
+
+mkdir /mnt/newroot/ro
+mkdir /mnt/newroot/rw
+grep -v "$rootDev" /mnt/lower/etc/fstab > /mnt/newroot/etc/fstab
+cd /mnt/newroot
+pivot_root . mnt
+
+exec chroot . sh -c "$(cat <<END
+        # move ro and rw mounts to the new root
+        mount --move /mnt/mnt/lower/ /ro
+        mount --move /mnt/mnt/rw /rw
+        # unmount unneeded mounts so we can unmout the old readonly root
+        umount /mnt/mnt
+        umount /mnt/proc
+        umount /mnt/dev
+        umount /mnt
+        # continue with regular init
+        exec /sbin/init
+END
+)"
