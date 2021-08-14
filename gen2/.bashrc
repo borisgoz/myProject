@@ -13,18 +13,17 @@ if [[ $- != *i* ]] ; then
         return
 fi
 
-if [ -d /ro ] ; then
+if [ -f /product/boot_gold ]; then
+	if [ -d /ro ]; then
+		PS1="\[\033[1;33m\](gold-\[\033[1;35m\]ro\[\033[1;33m\]) "$PS1
+	else
+		PS1="\[\033[1;33m\](gold-\[\033[1;32m\]rw\[\033[1;33m\]) "$PS1
+	fi
+elif [ -d /ro ]; then
    PS1="\[\033[1;35m\](ro) "$PS1
 else
    PS1="\[\033[1;32m\](rw) "$PS1
 fi
-
-#4gold
-#if [ -d /ro ] ; then
-#   PS1="\[\033[1;33m\](gold-\[\033[1;35m\]ro\[\033[1;33m\]) "$PS1
-#else
-#   PS1="\[\033[1;33m\](gold-\[\033[1;32m\]rw\[\033[1;33m\]) "$PS1
-#fi
 
 # Put your fun stuff here.
 alias ll='ls -alF'
