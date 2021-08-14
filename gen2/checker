@@ -1,0 +1,42 @@
+#!/bin/bash
+#file: /etc/init.d/checker
+# chkconfig 2345 20 80
+# description: checking cpu load
+# source function library
+# . /etc/init.d/functions?
+REASON=0
+case "$1" in
+    start)
+	echo "$(date) service checker started" >> /var/log/checker.log
+        /usr/local/bin/checker.sh &
+        echo $! > /tmp/checker.pid
+        ;;
+
+    stop)
+	if [ -e /tmp/checker.pid ]; then kill `cat /tmp/checker.pid`; fi
+	if [ $? -eq 0 ]; then echo "$(date) service checker stopped" >> /var/log/checker.log; fi
+        if [ -e /tmp/checker.pid ]; then rm /tmp/checker.pid; fi
+        ;;
+
+    restart)
+        $0 stop
+        $0 start
+        ;;
+
+    status)
+        if [ -e /tmp/checker.pid ]; then
+            echo "checker is running, pid=$(cat /tmp/checker.pid)"
+        else
+            echo "checker is NOT running"
+	    REASON=1
+            #exit 1
+        fi
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+esac
+
+echo $REASON
+exit $REASON
+#END
