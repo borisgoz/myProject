@@ -1,0 +1,5 @@
+# 2021-08-13-v1
+# uname -srvo
+# Linux 5.10.52-gentoo #2 SMP Thu Aug 12 22:06:48 -00 2021 GNU/Linux
+kernel=5.10.52-gentoo
+kernelgold=5.10.52-gentoo

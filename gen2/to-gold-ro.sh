@@ -14,9 +14,18 @@ if [ "$REASON" -eq 0 ]; then
 	if [ -e /product/boot_gold_rw ]; then
 		mount -o remount,rw /dev/sda3 /product/
 		rm /product/boot_gold_rw
-		if [ $? -ne 0 ]; then REASON=1; MSG="failed delete /product/boot_gold_rw file"; fi
+		if [ $? -ne 0 ]; then REASON=2; MSG="failed delete /product/boot_gold_rw file"; fi
 		mount -o remount,ro /dev/sda3 /product/
 	fi
+fi
+
+if [ "$REASON" -eq 0 ]; then
+        if [ -e /product/boot_rw ]; then
+                mount -o remount,rw /dev/sda3 /product/
+                rm /product/boot_rw
+                if [ $? -ne 0 ]; then REASON=3; MSG="failed delete /roduct/boot_rw file"; fi
+                mount -o remount,ro /dev/sda3 /product/
+        fi
 fi
 
 echo $MSG
