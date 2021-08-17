@@ -1,5 +1,12 @@
+#(rw) localhost /usr/src # equery list "*" | wc -l
+#349
+#(rw) localhost /usr/src # emerge world -ep | wc -l
+#352
+# emerge --ask --verbose --update --deep --newuse @world
+
 # 2021-08-13-v1
 # uname -srvo
 # Linux 5.10.52-gentoo #2 SMP Thu Aug 12 22:06:48 -00 2021 GNU/Linux
 kernel=5.10.52-gentoo
+#kernel=5.10.56-rt49
 kernelgold=5.10.52-gentoo

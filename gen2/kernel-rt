@@ -1,0 +1,14 @@
+wget https://.../linux-5.10.56.tar.gz
+wget http://.../patch-5.10.56-rt49.patch.gz
+tar -zxf linux-5.10.56.tar.gz
+mv linux-5.10.56 linux-5.10.56-rt49
+gunzip patch-5.10.56-rt49.patch.gz
+cd linux-5.10.56-rt49
+patch -p1 <../patch-5.10.56-rt49.patch
+make menuconfig > < Save > + < Exit > 
+make oldconfig
+make -j4
+make
+make install
+make modules_install
+cd ..
