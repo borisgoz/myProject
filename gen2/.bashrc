@@ -25,6 +25,9 @@ else
    PS1="\[\033[1;32m\](rw) "$PS1
 fi
 
+echo
+cat ./linux
+echo
 # Put your fun stuff here.
 alias ll='ls -alF'
 alias ddu='du -sh * .??* 2>/dev/null | sort -hr | head -10'

@@ -1,0 +1,31 @@
+(rw) localhost ~/mygit/myProject/gen2 # qemu-system-x86_64
+VNC server running on 127.0.0.1:5900
+
+https://qemu-project.gitlab.io/qemu/index.html
+https://qemu-project.gitlab.io/qemu/system/images.html
+
+(rw) localhost ~ # mkdir -p /VMs/HD/
+(rw) localhost ~ # cd /VMs/HD/
+(rw) localhost /VMs/HD # qemu-img create VM1.raw 1536M
+Formatting 'VM1.raw', fmt=raw size=1610612736
+(rw) localhost /VMs/HD # ll
+-rw-r--r-- 1 root root 1610612736 Aug 19 14:53 VM1.raw
+-rw-r--r-- 1 root root 1.5G Aug 19 14:53 VM1.raw
+(rw) localhost /VMs/HD # mkdir -p /VMs/kernel
+(rw) localhost /VMs # cd ../kernel
+(rw) localhost /VMs/kernel # cp /tmp/gold/boot/* .
+(rw) localhost /VMs/kernel # ll
+-rwxr-xr-x 1 root root 5192061 Aug 19 18:45 System.map-5.10.52-gentoo*
+-rwxr-xr-x 1 root root  125817 Aug 19 18:45 config-5.10.52-gentoo*
+-rwxr-xr-x 1 root root 9145184 Aug 19 18:45 vmlinuz-5.10.52-gentoo*
+(rw) localhost /VMs/kernel #
+add kernek module: CONFIG_HYPERVISOR_GUEST
+ --- Linux guest support                                                                        x x
+  x x                        [ ]   Enable paravirtualization code (NEW)                                                     x x
+  x x                        [ ]   Disable host haltpoll when loading haltpoll driver (NEW)                                 x x
+  x x                        [ ]   Support for running PVH guests (NEW)                                                     x x
+  x x                        [ ]   Jailhouse non-root cell support (NEW)                                                    x x
+  x x                        [ ]   ACRN Guest support (NEW)
+
+CONFIG_VFIO
+ <M> VFIO Non-Privileged userspace driver framework  --->  
