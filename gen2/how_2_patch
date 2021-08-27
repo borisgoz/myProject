@@ -1,0 +1,29 @@
+$ mkdir proj
+$ nano proj/script
+its 1st line
+its 2nd line
+$ nano script (new version)
+its 1st line
+it's 2nd line
+it's 3rd line
+$ cd proj
+$ diff script ../script
+2c2,3
+< its 2nd line
+---
+> it's 2nd line
+> it's 3rd line
+$ diff -u script ../script > ../my.patch
+$ patch -p1<./my.patch
+Patching file script
+$ diff script ../script
+$
+$ ls -l
+-rw-r--r-- 171 my.patch
+$ gzip my.patch
+$ ls -l
+-rw-r--r-- 135 my.patch.gz
+$ gunzip my.patch.gz
+$ ls -l
+-rw-r--r-- 171 my.patch
+$
