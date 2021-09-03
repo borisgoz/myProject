@@ -5,9 +5,11 @@ mv linux-5.10.56 linux-5.10.56-rt49
 gunzip patch-5.10.56-rt49.patch.gz
 cd linux-5.10.56-rt49
 patch -p1 <../patch-5.10.56-rt49.patch
+patch -p1 < patch*example.patch
 make menuconfig > < Save > + < Exit > 
 make oldconfig
 make -j4
+make -j $(nproc)
 make
 make install
 make modules_install
