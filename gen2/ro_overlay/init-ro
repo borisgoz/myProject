@@ -15,7 +15,10 @@ rootDev=`awk '$2 == "/" {print $1}' /etc/fstab`
 rootMountOpt=`awk '$2 == "/" {print $4}' /etc/fstab`
 rootFsType=`awk '$2 == "/" {print $3}' /etc/fstab`
 mount -t ${rootFsType} -o ${rootMountOpt},ro ${rootDev} /mnt/lower
+#mount -t ext4 -o defaults,ro UUID=ec360f8b-89cf-4ea5-9920-3c5d99a69d87 /mnt/lower
+#mount -t ${rootFsType} -o ${rootMountOpt},ro /dev/sda5 /mnt/lower
 mount -t overlay -o lowerdir=/mnt/lower,upperdir=/mnt/rw/upper,workdir=/mnt/rw/work overlayfs-root /mnt/newroot
+#bash
 
 mkdir /mnt/newroot/ro
 mkdir /mnt/newroot/rw

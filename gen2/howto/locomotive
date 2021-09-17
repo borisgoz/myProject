@@ -1,0 +1,27 @@
+Script started on 2021-09-17 20:36:30+00:00 [TERM="xterm" TTY="/dev/pts/1" COLUMNS="117" LINES="31"]
+
+(rw) root@localhost: memerge --ask --verbose app-misc/sl
+
+(rw) root@localhost: sl
+(rw) root@localhost: sl -a # animation, with people on the train shouting for help 
+(rw) root@localhost: sl -l # little, smaller train
+(rw) root@localhost: sl -F # fly
+
+                      (@@) (  ) (@)  ( )  @@    ()    @     O     @     O      @
+                 (   )
+             (@@@@)
+          (    )
+
+        (@@@)
+         ++      +------ ____                 ____________________ ____________________
+         ||      |+-+ |  |   \@@@@@@@@@@@     |  ___ ___ ___ ___ | |  ___ ___ ___ ___ |
+       /---------|| | |  |    \@@@@@@@@@@@@@_ |  |_| |_| |_| |_| | |  |_| |_| |_| |_| |
+      + ========  +-+ |  |                  | |__________________| |__________________|
+     _|--/~\------/~\-+  |__________________| |__________________| |__________________|
+    //// O========O_/       (O)       (O)        (O)        (O)       (O)        (O)
+
+
+
+exit
+
+Script done on 2021-09-17 20:45:26+00:00 [COMMAND_EXIT_CODE="0"]
