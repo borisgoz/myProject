@@ -28,8 +28,20 @@ echo -e "this \033[0;45mPurple_BG\033[0;37m text"
 echo -e "this \033[0;46mCyan_BG\033[0;37m text"
 echo -e "this \033[0;47mWhite_BG\033[0;37m text"
 
-
 echo -e "this \033[1;41m\033[1;32mRED_BG,Yellow_FG\033[0;37m text"
-
+echo
+echo -e "+---------+------+----+"
+echo -e "| Color   | Text | BG |"
+echo -e "+---------+------+----+"
+echo -e "| Black   | 30   | 40 |"
+echo -e "| Red     | 31   | 41 |"
+echo -e "| Green   | 32   | 42 |"
+echo -e "| Yellow  | 33   | 43 |"
+echo -e "| Blue    | 34   | 44 |"
+echo -e "| Magenta | 35   | 45 |"
+echo -e "| Cyan    | 36   | 46 |"
+echo -e "| White   | 37   | 47 |"
+echo -e "+---------+------+----+"
+echo
 #end
 

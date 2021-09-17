@@ -1,0 +1,38 @@
+root@localhost ~ # emerge --ask --verbose net-analyzer/nmap dev-libs/liblinear
+root@localhost ~ # nmap -p- 192.168.56.104
+Starting Nmap 7.92 ( https://nmap.org ) at 2021-09-17 21:16 -00
+Nmap scan report for 192.168.56.104verbose net-analyzer/nmap
+Host is up (0.000031s latency).
+Not shown: 65534 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 1 IP address (1 host up) scanned in 6.81 seconds
+root@localhost ~ #
+root@localhost ~ # nmap 127.0.0.1
+Starting Nmap 7.92 ( https://nmap.org ) at 2021-09-17 21:16 -00
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000030s latency).
+Not shown: 999 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 1 IP address (1 host up) scanned in 1.03 seconds
+root@localhost ~/ #
+root@localhost ~/ # nmap -Pn -p 22 127.0.0.1
+Starting Nmap 7.92 ( https://nmap.org ) at 2021-09-17 21:17 -00
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00015s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 1 IP address (1 host up) scanned in 0.13 seconds
+root@localhost ~/ #
+root@localhost ~/ # netstat -tuna
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN
+tcp        0     64 192.168.56.104:22       192.168.56.1:49566      ESTABLISHED
+tcp        0      0 192.168.56.104:22       192.168.56.1:54296      ESTABLISHED
+root@localhost ~/ #
