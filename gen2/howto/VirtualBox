@@ -1,0 +1,27 @@
+$ zerofree -v /dev/sda1
+C:\> "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" modifymedium --compact "C:\Users\Love\VirtualBox VMs\gentoo16\gentoo16.vdi"
+
+enable VT-x
+Edit C:\Users\Love\VirtualBox VMs\gentoo16\gentoo16.vbox and add
+
+line 24:
+<Hardware>
+      <CPU count="2">
+        <PAE enabled="true"/>
+        <LongMode enabled="true"/>
+        <X2APIC enabled="true"/>
+        <HardwareVirtExLargePages enabled="true"/>
+      </CPU>
+to:
+<Hardware>
+      <CPU count="2">
+        <PAE enabled="true"/>
+add:    <NestedHWVirt enabled="true"/>
+        <LongMode enabled="true"/>
+        <X2APIC enabled="true"/>
+        <HardwareVirtExLargePages enabled="true"/>
+      </CPU>
+<Save and exit>
+
+open CMD prompt and run 
+C:\> "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" modifyvm gentoo16 --nested-hw-virt on
