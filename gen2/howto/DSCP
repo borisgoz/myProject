@@ -1,0 +1,33 @@
+~ # iptables-save > iptables.backup
+~ # iptables-restore < iptables.backup
+~ # echo kuku > /dev/udp/127.0.0.1/5001
+~ # tcpdump -i any udp port 5001 -v
+19:47:24.043753 lo    In  IP (tos 0x0, ttl 64, id 2227, offset 0, flags [DF], proto UDP (17), length 33)
+    localhost.35276 > localhost.5001: UDP, length 5
+
+~ # iptables -t nat -A OUTPUT -o lo -d 127.0.0.1 -p udp --dport 5001 -j DNAT --to-destination 192.168.56.104:5001
+19:55:30.059073 lo    In  IP (tos 0x0, ttl 64, id 24531, offset 0, flags [DF], proto UDP (17), length 33)
+    localhost.46697 > 192.168.56.104.5001: UDP, length 5
+
+~ # iptables -t mangle -A POSTROUTING -s 127.0.0.1 -d 192.168.56.104 -j DSCP --set-dscp 1
+19:55:40.969019 lo    In  IP (tos 0x4, ttl 64, id 26338, offset 0, flags [DF], proto UDP (17), length 33)
+    localhost.46697 > 192.168.56.104.5001: UDP, length 5
+
+~ # echo kuku > /dev/udp/127.0.0.1/5002
+19:58:02.352819 lo    In  IP (tos 0x0, ttl 64, id 34481, offset 0, flags [DF], proto UDP (17), length 33)
+    localhost.58872 > localhost.rfe: UDP, length 5
+
+~ # iptables -t mangle -A POSTROUTING -s 127.0.0.1 -d 127.0.0.1 -j DSCP --set-dscp 2
+19:58:53.996206 lo    In  IP (tos 0x8, ttl 64, id 8520, offset 0, flags [DF], proto UDP (17), length 33)
+    localhost.49598 > localhost.rfe: UDP, length 5
+
+~ # echo kuku > /dev/udp/192.168.56.104/5003
+20:00:11.415269 lo    In  IP (tos 0x0, ttl 64, id 56181, offset 0, flags [DF], proto UDP (17), length 33)
+    192.168.56.104.55127 > 192.168.56.104.5003: UDP, length 5
+
+~ # iptables -t mangle -A POSTROUTING -s 192.168.56.104 -d 192.168.56.104 -j DSCP --set-dscp 5
+20:01:19.738875 lo    In  IP (tos 0x14, ttl 64, id 26870, offset 0, flags [DF], proto UDP (17), length 33)
+    192.168.56.104.50986 > 192.168.56.104.5003: UDP, length 5
+
+MMC > GPO > comp conf > win settings > Policy based QoS > new > Specify DSCP Value
+
