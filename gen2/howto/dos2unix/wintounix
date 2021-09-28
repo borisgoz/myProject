@@ -1,0 +1,24 @@
+[01;31mlocalhost[01;34m #[00m cat win.txt 
+[?2004l1st line from Win
+2nd line from Win
+3rd line from Win
+[01;31mlocalhost[01;34m #[00m cat -v win.txt
+[?2004l1st line from Win^M
+2nd line from Win^M
+3rd line from Win^M
+[01;31mlocalhost[01;34m #[00m cat -v win.txt > backup
+[01;31mlocalhost[01;34m #[00m cat -v backup 
+[?2004l1st line from Win^M
+2nd line from Win^M
+3rd line from Win^M
+[01;31mlocalhost[01;34m #[00m emerge -a app-text/dos2unix
+[01;31mlocalhost[01;34m #[00m dos2unix win.txt 
+[?2004ldos2unix: converting file win.txt to Unix format...
+[01;31mlocalhost[01;34m #[00m cat -v win.txt 
+[?2004l1st line from Win
+2nd line from Win
+3rd line from Win
+[01;31mlocalhost[01;34m #[00m [?2004l
+exit
+
+Script done on 2021-09-25 21:29:07+00:00 [COMMAND_EXIT_CODE="0"]
