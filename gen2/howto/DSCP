@@ -31,3 +31,7 @@
 
 MMC > GPO > comp conf > win settings > Policy based QoS > new > Specify DSCP Value
 
+~ # iptables -t nat -A OUTPUT -o eth1 -d 192.168.56.104 -p udp --dport 5050 -j DNAT --to-destination 127.0.0.1:5050
+DNAT for loopback traffic is not possible, so goto https://www.howtoforge.com/port-forwarding-with-rinetd-on-debian-etch
+~ # emerge --ask --verbose net-misc/rinetd
+

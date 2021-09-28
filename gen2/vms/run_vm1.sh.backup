@@ -18,12 +18,9 @@ CMD="qemu-system-x86_64 -enable-kvm \
 			-nographic \
 			-smp $CORE_COUNT \
 			-m size=$RAM_MB,maxmem=$MAX_RAM_MB \
-			-device e1000,netdev=vm1_eth0,mac=08:00:27:00:01:01
-			-netdev tap,id=net0 &
+			-nic tap,ifname=$ETH0_NAME,mac=08:00:27:00:01:01,script=no,downscript=no \
+			-nic tap,ifname=$ETH2_NAME,mac=08:00:27:00:01:02,script=no,downscript=no &
 "
-#			-nic tap,ifname=$ETH0_NAME,mac=08:00:27:00:01:01,script=no,downscript=no \
-#			-nic tap,ifname=$ETH2_NAME,mac=08:00:27:00:01:02,script=no,downscript=no &
-#"
 echo $CMD
 echo
 eval $CMD
