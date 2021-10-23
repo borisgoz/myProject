@@ -1,0 +1,6 @@
+sysctl -w net.ipv4.conf.all.route_localnet=1 > /dev/null
+ip link add link eth0 name eth0.100 type vlan id 100
+ifconfig eth0.100 up
+cat /etc/modprobe.d/vfio.conf
+#enable forwarding
+echo 1 > /proc/sys/net/ipv4/conf/eth0.100/forwarding

@@ -1,0 +1,17 @@
+(rw) localhost ~ # emerge --sync
+(rw) localhost ~ # emerge --ask --verbose --update --deep --newuse @world
+(rw) localhost ~ # eselect profile show
+Current /etc/portage/make.profile symlink:
+  default/linux/amd64/17.1
+(rw) localhost ~ # ll  /etc/portage/make.profile
+lrwxrwxrwx 1 root root 59 Aug  1 17:34 /etc/portage/make.profile -> ../../var/db/repos/gentoo/profiles/default/linux/amd64/17.1/
+(rw) localhost ~ # emerge --depclean
+(rw) localhost ~ # eselect profile set default/linux/amd64/17.1/desktop/gnome
+(rw) localhost ~ # nano /etc/portage/make.conf
+USE="-qt -kde gtk gnome"
+(rw) localhost ~ # etc-update
+(rw) localhost ~ # emerge --ask gnome-base/gnome-light
+(rw) localhost ~ #
+(rw) localhost /var/tmp/portage # cd /var/tmp/portage/
+(rw) localhost /var/tmp/portage # rm -rf dev-lang/ sys-devel/ sys-libs/
+
