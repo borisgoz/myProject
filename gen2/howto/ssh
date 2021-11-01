@@ -1,0 +1,274 @@
+(rw) localhost ~ # ll .ssh/
+-rw------- 1 root root 2602 Aug 13 21:04 id_rsa
+-rw-r--r-- 1 root root  568 Aug 13 21:04 id_rsa.pub
+-rw------- 1 root root 1481 Sep 17 20:58 known_hosts
+(rw) localhost ~ #
+(rw) localhost ~ # gpg --gen-key
+gpg (GnuPG) 2.2.32; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Note: Use "gpg --full-generate-key" for a full featured key generation dialog.
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Boris Goz
+Email address: borisgoz@gmail.com
+You selected this USER-ID:
+    "Boris Goz <borisgoz@gmail.com>"
+
+Change (N)ame, (E)mail, or (O)kay/(Q)uit? o
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+
+Boris123
+
+            lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk
+            x Please enter the passphrase to                       x
+            x protect your new key                                 x
+            x                                                      x
+            x Passphrase: ________________________________________ x
+            x                                                      x
+            x       <OK>                              <Cancel>     x
+            mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+
+            lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk
+            x Please re-enter this passphrase                      x
+            x                                                      x
+            x Passphrase: ________________________________________ x
+            x                                                      x
+            x       <OK>                              <Cancel>     x
+            mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+
+
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: /root/.gnupg/trustdb.gpg: trustdb created
+gpg: key 6A6CA635119E9C26 marked as ultimately trusted
+gpg: directory '/root/.gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/root/.gnupg/openpgp-revocs.d/96562AEF870D889C17EE90346A6CA635119E9C26.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2021-11-01 [SC] [expires: 2023-11-01]
+      96562AEF870D889C17EE90346A6CA635119E9C26
+uid                      Boris Goz <borisgoz@gmail.com>
+sub   rsa3072 2021-11-01 [E] [expires: 2023-11-01]
+
+(rw) localhost ~ # ll .gnupg/
+srwx------ 1 root root    0 Nov  1 20:20 S.gpg-agent=
+srwx------ 1 root root    0 Nov  1 20:17 S.gpg-agent.browser=
+srwx------ 1 root root    0 Nov  1 20:17 S.gpg-agent.extra=
+srwx------ 1 root root    0 Nov  1 20:17 S.gpg-agent.ssh=
+drwx------ 2 root root 4096 Nov  1 20:20 openpgp-revocs.d/
+drwx------ 2 root root 4096 Nov  1 20:20 private-keys-v1.d/
+-rw-r--r-- 1 root root 1972 Nov  1 20:20 pubring.kbx
+-rw------- 1 root root   32 Sep  3 20:53 pubring.kbx~
+-rw------- 1 root root 1240 Nov  1 20:20 trustdb.gpg
+
+(rw) localhost ~ # gpg --list-key
+gpg: checking the trustdb
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+gpg: next trustdb check due at 2023-11-01
+/root/.gnupg/pubring.kbx
+------------------------
+pub   rsa3072 2021-11-01 [SC] [expires: 2023-11-01]
+      96562AEF870D889C17EE90346A6CA635119E9C26
+uid           [ultimate] Boris Goz <borisgoz@gmail.com>
+sub   rsa3072 2021-11-01 [E] [expires: 2023-11-01]
+
+(rw) localhost ~ #
+
+(rw) localhost ~ # gpg --full-generate-key
+gpg (GnuPG) 2.2.32; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+  (14) Existing key from card
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072)
+Requested keysize is 3072 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 1y
+Key expires at Tue Nov  1 20:32:12 2022 -00
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Boris Goz
+Email address: borisgoz@gmail.com
+Comment: my_key
+You selected this USER-ID:
+    "Boris Goz (my_key) <borisgoz@gmail.com>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key CE9A3DB96E8A1221 marked as ultimately trusted
+gpg: revocation certificate stored as '/root/.gnupg/openpgp-revocs.d/43ABD6C3561752A4DC12A8ECCE9A3DB96E8A1221.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2021-11-01 [SC] [expires: 2022-11-01]
+      43ABD6C3561752A4DC12A8ECCE9A3DB96E8A1221
+uid                      Boris Goz (my_key) <borisgoz@gmail.com>
+sub   rsa3072 2021-11-01 [E] [expires: 2022-11-01]
+
+(rw) localhost ~ # ll .gnupg/
+srwx------ 1 root root    0 Nov  1 20:35 S.gpg-agent=
+srwx------ 1 root root    0 Nov  1 20:17 S.gpg-agent.browser=
+srwx------ 1 root root    0 Nov  1 20:17 S.gpg-agent.extra=
+srwx------ 1 root root    0 Nov  1 20:17 S.gpg-agent.ssh=
+drwx------ 2 root root 4096 Nov  1 20:35 openpgp-revocs.d/
+drwx------ 2 root root 4096 Nov  1 20:35 private-keys-v1.d/
+-rw-r--r-- 1 root root 3921 Nov  1 20:35 pubring.kbx
+-rw-r--r-- 1 root root 1972 Nov  1 20:20 pubring.kbx~
+-rw------- 1 root root 1320 Nov  1 20:35 trustdb.gpg
+(rw) localhost ~ #
+(rw) localhost ~ # ls ~/.gnupg
+S.gpg-agent          S.gpg-agent.ssh    pubring.kbx
+S.gpg-agent.browser  openpgp-revocs.d   pubring.kbx~
+S.gpg-agent.extra    private-keys-v1.d  trustdb.gpg
+(rw) localhost ~ #
+(rw) localhost ~ # gpg --list-key
+gpg: checking the trustdb
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   2  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 2u
+gpg: next trustdb check due at 2022-11-01
+/root/.gnupg/pubring.kbx
+------------------------
+pub   rsa3072 2021-11-01 [SC] [expires: 2023-11-01]
+      96562AEF870D889C17EE90346A6CA635119E9C26
+uid           [ultimate] Boris Goz <borisgoz@gmail.com>
+sub   rsa3072 2021-11-01 [E] [expires: 2023-11-01]
+
+pub   rsa3072 2021-11-01 [SC] [expires: 2022-11-01]
+      43ABD6C3561752A4DC12A8ECCE9A3DB96E8A1221
+uid           [ultimate] Boris Goz (my_key) <borisgoz@gmail.com>
+sub   rsa3072 2021-11-01 [E] [expires: 2022-11-01]
+
+(rw) localhost ~ #
+(rw) localhost ~ # gpg --export my_key > gpg.public
+(rw) localhost ~ # less gpg.public
+"gpg.public" may be a binary file.  See it anyway?
+(rw) localhost ~ #
+
+
+(rw) localhost ~ # ssh boris@192.168.56.101
+The authenticity of host '192.168.56.101 (192.168.56.101)' can't be established.
+ED25519 key fingerprint is SHA256:hRym/3DdmNTvWjzhW95TZzbaxBg4vVHLgTK8GudH5ig.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.56.101' (ED25519) to the list of known hosts.
+boris@192.168.56.101's password:
+
+Last login: Mon Nov  1 20:40:56 2021
+boris@ubuntu:~$
+
+(rw) localhost ~ # scp gpg.public boris@192.168.56.101:/home/boris/
+boris@192.168.56.101's password:
+gpg.public                                    100% 1759   946.8KB/s   00:00
+(rw) localhost ~ #
+
+boris@ubuntu:~$ gpg --list-key
+gpg: directory '/home/boris/.gnupg' created
+gpg: keybox '/home/boris/.gnupg/pubring.kbx' created
+gpg: /home/boris/.gnupg/trustdb.gpg: trustdb created
+boris@ubuntu:~$ gpg --list-key
+boris@ubuntu:~$
+boris@ubuntu:~$ gpg --import gpg.public
+gpg: key CE9A3DB96E8A1221: public key "Boris Goz (my_key) <borisgoz@gmail.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+boris@ubuntu:~$
+boris@ubuntu:~$ gpg --list-key
+/home/boris/.gnupg/pubring.kbx
+------------------------------
+pub   rsa3072 2021-11-01 [SC] [expires: 2022-11-01]
+      43ABD6C3561752A4DC12A8ECCE9A3DB96E8A1221
+uid           [ unknown] Boris Goz (my_key) <borisgoz@gmail.com>
+sub   rsa3072 2021-11-01 [E] [expires: 2022-11-01]
+
+boris@ubuntu:~$
+boris@ubuntu:~$ echo secret > myCrypto
+boris@ubuntu:~$ cat myCrypto
+secret
+boris@ubuntu:~$
+boris@ubuntu:~$ gpg --out secretFile --recipient 'borisgoz@gmail.com' --encrypt myCrypto
+gpg: A29DE3D8BBEB91F8: There is no assurance this key belongs to the named user
+
+sub  rsa3072/A29DE3D8BBEB91F8 2021-11-01 Boris Goz (my_key) <borisgoz@gmail.com>
+ Primary key fingerprint: 43AB D6C3 5617 52A4 DC12  A8EC CE9A 3DB9 6E8A 1221
+      Subkey fingerprint: 83ED EE8D F06C F962 9588  BE12 A29D E3D8 BBEB 91F8
+
+It is NOT certain that the key belongs to the person named
+in the user ID.  If you *really* know what you are doing,
+you may answer the next question with yes.
+
+Use this key anyway? (y/N) y
+boris@ubuntu:~$
+boris@ubuntu:~$ ll myCrypto secretFile
+-rw-rw-r-- 1 boris boris   7 Nov  1 20:49 myCrypto
+-rw-rw-r-- 1 boris boris 475 Nov  1 20:52 secretFile
+boris@ubuntu:~$
+boris@ubuntu:~$ scp secretFile root@192.168.56.104:/root
+boris@ubuntu:~$
+boris@ubuntu:~$ scp secretFile root@192.168.56.104:/root
+The authenticity of host '192.168.56.104 (192.168.56.104)' can't be established.
+ECDSA key fingerprint is SHA256:vJy81izDW7TrwTbQ3Gp8lNA2F63X7/RexdlFkgTM5W0.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.56.104' (ECDSA) to the list of known hosts.
+Password:
+secretFile                                    100%  475   155.1KB/s   00:00
+boris@ubuntu:~$
+boris@ubuntu:~$ exit
+
+(rw) localhost ~ # cat secretFile
+▒▒▒▒▒ػ▒▒
+        ▒N'<cv>▒~▒▒u▒^77y#K,??Z`▒▒▒S▒Q▒▒v▒;▒▒▒▒ur!▒Br▒▒;▒▒▒nN▒,▒f▒      w▒a▒4▒▒\▒C▒dG▒|▒▒▒l▒▒)0G▒
+                 ▒3=▒Xt2a{▒|▒▒▒▒^;▒▒/▒▒U"▒▒3▒S▒Gt-▒B▒]▒▒▒j'▒4K[▒l3%▒U▒D▒
+▒▒%▒▒▒▒yW▒▒YDpXK▒j3-{▒▒▒;K▒▒▒▒▒Y▒-Sy▒▒▒▒z▒▒f▒ŁQ▒L`▒'\R{▒$S▒Ŋ▒▒▒▒
+▒▒▒▒o▒6▒▒݆▒▒▒▒m▒▒nH▒~
+▒▒nOm▒=s▒L▒,38▒▒c▒�▒▒▒▒J▒▒▒▒▒I▒^▒μw▒▒▒N▒n▒▒▒[1͢▒▒▒OB▒▒▒_▒U:▒▒8▒▒▒▒it▒    ▒ۜ▒9▒▒▒fW(rw) localhost ~ # PuTTYPuTTY^C
+(rw) localhost ~ #
+
+
+(rw) localhost ~ # gpg --out uncrypted_some_local_file --decrypt secretFile
+
+            lqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqk
+            x Please enter the passphrase to                       x
+            x protect your new key                                 x
+            x                                                      x
+            x Passphrase: ________________________________________ x
+            x                                                      x
+            x       <OK>                              <Cancel>     x
+            mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+
+gpg: encrypted with 3072-bit RSA key, ID A29DE3D8BBEB91F8, created 2021-11-01
+      "Boris Goz (my_key) <borisgoz@gmail.com>"
+(rw) localhost ~ #
+(rw) localhost ~ # cat uncrypted_some_local_file
+secret
+(rw) localhost ~ #
+
+#END

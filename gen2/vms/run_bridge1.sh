@@ -9,16 +9,16 @@ if [ $? -ne 0 ]; then REASON=1; MSG="failed up "$VM"_eth0"; fi
 ifconfig "$VM"_eth1 up
 if [ $? -ne 0 ]; then REASON=2; MSG="failed up "$VM"_eth1"; fi
 
-if [ $REASON -eq 0 ]; then brctl addbr BR
+if [ "$REASON" == "0" ]; then brctl addbr BR
 if [ $? -ne 0 ]; then REASON=3; MSG="failed create BR"; fi; fi
 
-if [ $REASON -eq 0 ]; then brctl addif BR eth1 "$VM"_eth0
+if [ "$REASON" == "0" ]; then brctl addif BR eth1 "$VM"_eth0
 if [ $? -ne 0 ]; then REASON=4; MSG="failed add interfaces to BR"; fi; fi
 
-if [ $REASON -eq 0 ]; then ifconfig eth1 0.0.0.0 up
+if [ "$REASON" == "0" ]; then ifconfig eth1 0.0.0.0 up
 if [ $? -ne 0 ]; then REASON=5; MSG="failed down eth0"; fi; fi
 
-if [ $REASON -eq 0 ]; then
+if [ "$REASON" == "0" ]; then
 ifconfig BR ${IP[0]} netmask ${IP[1]} gw ${IP[2]} up
 if [ $? -ne 0 ]; then REASON=5; MSG="failed up ip for BR"; fi; fi
 
