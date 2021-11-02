@@ -1,0 +1,196 @@
+(rw) local ~ # rm -rf .gnupg/
+(rw) local ~ # gpg --list-key
+(rw) local ~ # gpg --full-generate-key
+(rw) local ~ # gpg --export my_key > gpg.public
+(rw) local ~ # scp gpg.public user@IP:/home/user/
+
+user@IP ~$ echo secret > myCrypto
+user@IP ~$ gpg --out secretFile --recipient e@mail.com --encrypt myCrypto
+user@IP ~$ scp secretFile local_user@local_IP:/home/user/
+
+(rw) local ~ # gpg --out uncrypted_file --decrypt secretFile
+(rw) local ~ # cat uncrypted_file
+secret
+(rw) local ~ #
+
+
+===========================================================
+
+(rw) local ~ # ssh-copy-id -i .ssh/id_rsa.pub boris@192.168.56.101
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: ".ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+boris@192.168.56.101's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'boris@192.168.56.101'"
+and check to make sure that only the key(s) you wanted were added.
+
+(rw) local ~ # ubuntu
+boris@ubuntu:~$
+boris@ubuntu:~$ gpg --list-key
+gpg: directory '/home/boris/.gnupg' created
+gpg: keybox '/home/boris/.gnupg/pubring.kbx' created
+gpg: /home/boris/.gnupg/trustdb.gpg: trustdb created
+boris@ubuntu:~$ gpg --list-key
+boris@ubuntu:~$ exit
+
+(rw) localhost ~ #
+(rw) localhost ~ # rm -rf .gnupg/
+(rw) localhost ~ # gpg --list-key
+gpg: directory '/root/.gnupg' created
+gpg: keybox '/root/.gnupg/pubring.kbx' created
+gpg: /root/.gnupg/trustdb.gpg: trustdb created
+(rw) localhost ~ # ll .gnupg/
+-rw------- 1 root root   32 Nov  2 22:46 pubring.kbx
+-rw------- 1 root root 1200 Nov  2 22:46 trustdb.gpg
+(rw) localhost ~ #
+(rw) localhost ~ # gpg --full-generate-key
+gpg (GnuPG) 2.2.32; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+  (14) Existing key from card
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072)
+Requested keysize is 3072 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 2
+Key expires at Thu Nov  4 22:50:45 2021 -00
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Boris Goz
+Email address: borisgoz@gmail.com
+Comment: my_key
+You selected this USER-ID:
+    "Boris Goz (my_key) <borisgoz@gmail.com>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
+Password x 2
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key 6F698DB3A2CAACF1 marked as ultimately trusted
+gpg: directory '/root/.gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/root/.gnupg/openpgp-revocs.d/242DCFCCDE97A665E8103E6F6F698DB3A2CAACF1.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2021-11-02 [SC] [expires: 2021-11-04]
+      242DCFCCDE97A665E8103E6F6F698DB3A2CAACF1
+uid                      Boris Goz (my_key) <borisgoz@gmail.com>
+sub   rsa3072 2021-11-02 [E] [expires: 2021-11-04]
+
+(rw) localhost ~ #
+(rw) localhost ~ # ll .gnupg/
+srwx------ 1 root root    0 Nov  2 22:52 S.gpg-agent=
+srwx------ 1 root root    0 Nov  2 22:52 S.gpg-agent.browser=
+srwx------ 1 root root    0 Nov  2 22:52 S.gpg-agent.extra=
+srwx------ 1 root root    0 Nov  2 22:52 S.gpg-agent.ssh=
+drwx------ 2 root root 4096 Nov  2 22:52 openpgp-revocs.d/
+drwx------ 2 root root 4096 Nov  2 22:52 private-keys-v1.d/
+-rw-r--r-- 1 root root 1981 Nov  2 22:52 pubring.kbx
+-rw------- 1 root root   32 Nov  2 22:46 pubring.kbx~
+-rw------- 1 root root 1240 Nov  2 22:52 trustdb.gpg
+(rw) localhost ~ # gpg --list-key
+gpg: checking the trustdb
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+gpg: next trustdb check due at 2021-11-04
+/root/.gnupg/pubring.kbx
+------------------------
+pub   rsa3072 2021-11-02 [SC] [expires: 2021-11-04]
+      242DCFCCDE97A665E8103E6F6F698DB3A2CAACF1
+uid           [ultimate] Boris Goz (my_key) <borisgoz@gmail.com>
+sub   rsa3072 2021-11-02 [E] [expires: 2021-11-04]
+
+(rw) localhost ~ #
+(rw) localhost ~ # gpg --export my_key > .gnupg/gpg.public
+(rw) localhost ~ #
+(rw) localhost ~ # ll .gnupg/gpg.public
+-rw-r--r-- 1 root root 1759 Nov  2 22:55 .gnupg/gpg.public
+(rw) localhost ~ #
+(rw) localhost ~ # scp .gnupg/gpg.public boris@192.168.56.101:/home/boris/mySecret
+gpg.public                                    100% 1759   658.4KB/s   00:00
+(rw) localhost ~ # ubuntu
+
+boris@ubuntu:~$
+boris@ubuntu:~$ gpg --list-key
+boris@ubuntu:~$ gpg --import mySecret/gpg.public
+gpg: key 6F698DB3A2CAACF1: public key "Boris Goz (my_key) <borisgoz@gmail.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+boris@ubuntu:~$ gpg --list-key
+/home/boris/.gnupg/pubring.kbx
+------------------------------
+pub   rsa3072 2021-11-02 [SC] [expires: 2021-11-04]
+      242DCFCCDE97A665E8103E6F6F698DB3A2CAACF1
+uid           [ unknown] Boris Goz (my_key) <borisgoz@gmail.com>
+sub   rsa3072 2021-11-02 [E] [expires: 2021-11-04]
+
+boris@ubuntu:~$
+boris@ubuntu:~$ echo secret > mySecret/myCrypto
+boris@ubuntu:~$ cat mySecret/myCrypto
+secret
+boris@ubuntu:~$
+boris@ubuntu:~$ gpg --out mySecret/secretFile --recipient borisgoz@gmail.com --encrypt mySecret/myCrypto
+gpg: C5DD56E2B34E1995: There is no assurance this key belongs to the named user
+
+sub  rsa3072/C5DD56E2B34E1995 2021-11-02 Boris Goz (my_key) <borisgoz@gmail.com>
+ Primary key fingerprint: 242D CFCC DE97 A665 E810  3E6F 6F69 8DB3 A2CA ACF1
+      Subkey fingerprint: 1A04 25E6 C693 B6EB 06BF  59E0 C5DD 56E2 B34E 1995
+
+It is NOT certain that the key belongs to the person named
+in the user ID.  If you *really* know what you are doing,
+you may answer the next question with yes.
+
+Use this key anyway? (y/N) y
+boris@ubuntu:~$
+boris@ubuntu:~$ ll mySecret/
+-rw-r--r--  1 boris boris 1759 Nov  2 23:09 gpg.public
+-rw-rw-r--  1 boris boris    7 Nov  2 23:14 myCrypto
+-rw-rw-r--  1 boris boris  475 Nov  2 23:16 secretFile
+boris@ubuntu:~$
+boris@ubuntu:~$ scp mySecret/secretFile root@192.168.56.104:/root/.gnupg/
+
+(rw) localhost ~ #
+(rw) localhost ~ # gpg --out .gnupg/uncrypted_file --decrypt .gnupg/secretFile  
+gpg: encrypted with 3072-bit RSA key, ID C5DD56E2B34E1995, created 2021-11-02
+Password x 1
+      "Boris Goz (my_key) <borisgoz@gmail.com>"
+(rw) localhost ~ #
+(rw) localhost ~ # ll .gnupg/
+srwx------ 1 root root     0 Nov  2 23:24 S.gpg-agent=
+srwx------ 1 root root     0 Nov  2 22:52 S.gpg-agent.browser=
+srwx------ 1 root root     0 Nov  2 22:52 S.gpg-agent.extra=
+srwx------ 1 root root     0 Nov  2 22:52 S.gpg-agent.ssh=
+-rw-r--r-- 1 root root  1759 Nov  2 22:55 gpg.public
+drwx------ 2 root root  4096 Nov  2 22:52 openpgp-revocs.d/
+drwx------ 2 root root  4096 Nov  2 22:52 private-keys-v1.d/
+-rw-r--r-- 1 root root  1981 Nov  2 22:52 pubring.kbx
+-rw------- 1 root root    32 Nov  2 22:46 pubring.kbx~
+-rw-r--r-- 1 root root   475 Nov  2 23:22 secretFile
+-rw------- 1 root root  1280 Nov  2 22:53 trustdb.gpg
+-rw-r--r-- 1 root root     7 Nov  2 23:24 uncrypted_file
+(rw) localhost ~ #
+(rw) localhost ~ # cat .gnupg/uncrypted_file
+secret
+(rw) localhost ~ #
