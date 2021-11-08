@@ -29,3 +29,135 @@ add kernek module: CONFIG_HYPERVISOR_GUEST
 
 CONFIG_VFIO
  <M> VFIO Non-Privileged userspace driver framework  --->  
+
+
+(rw) localhost ~ # ip link add link eth1 name vm1_eth0 type vlan id 100
+(rw) localhost ~ # ifconfig vm1_eth0 up
+
+(rw) localhost ~ # emerge --ask net-fs/cifs-utils net-fs/nfs-utils
+
+add kernek modules:
+
+CONFIG_TUN=y
+CONFIG_VFIO=m
+CONFIG_VFIO_NOIOMMU=y
+CONFIG_VFIO_PCI=m
+CONFIG_VFIO_PCI_VGA=y
+CONFIG_BRIDGE_VLAN_FILTERING=y
+CONFIG_VLAN_8021Q=y
+CONFIG_HYPERVISOR_GUEST=y
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_BLK=y
+CONFIG_VIRTIO_NET=y
+
+
+(rw) localhost /VMs/HD # qemu-img create -f raw VM1.raw 1.5G
+(rw) localhost /VMs/HD # qemu-img info VM1.raw
+image: VM1.raw
+file format: raw
+virtual size: 1.5 GiB (1610612736 bytes)
+disk size: 4 KiB
+(rw) localhost /VMs/HD #
+(rw) localhost /VMs/HD # losetup -f VM1.raw
+(rw) localhost /VMs/HD # losetup -a
+/dev/loop0: [2053]:650439 (/VMs/HD/VM1.raw)
+(rw) localhost /VMs/HD #
+(rw) localhost /VMs/HD # parted VM1.raw
+
+GNU Parted 3.4
+Using /VMs/HD/VM1.raw
+(parted) mklabel gpt
+(parted) print free
+Disk /VMs/HD/VM1.raw: 1536MiB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Number  Start    End      Size     File system  Name  Flags
+        0.02MiB  1536MiB  1536MiB  Free Space
+
+(parted)
+(parted) unit mib
+(parted) mkpart linux
+File system type?  [ext2]? ext4
+Start? 1
+End? 1535MiB
+(parted) set 1 boot on
+
+(parted) print
+Model:  (file)
+Disk /VMs/HD/VM1.raw: 1536MiB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start    End      Size     File system  Name   Flags
+ 1      1.00MiB  1535MiB  1534MiB  ext4         linux  boot, esp
+
+(parted) q
+
+(rw) localhost /VMs/HD # mkfs.ext4 VM1.raw
+mke2fs 1.46.4 (18-Aug-2021)
+VM1.raw contains `DOS/MBR boot sector; partition 1 : ID=0xee, start-CHS (0x0,0,2), end-CHS (0x3ff,255,63), startsector 1, 3145727 sectors, extended partition table (last)' data
+Proceed anyway? (y,N) y
+Discarding device blocks: done
+Creating filesystem with 393216 4k blocks and 98304 inodes
+Filesystem UUID: fc57afdd-bc83-4c86-a4e7-22c1f02958a6
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+(rw) localhost /VMs/HD #
+
+(rw) localhost /VMs/HD # losetup -d /dev/loop0
+(rw) localhost /VMs/HD # mount -o loop=/dev/loop1 VM1.raw /mnt/
+(rw) localhost /VMs/HD # df
+Filesystem     1K-blocks    Used Available Use% Mounted on
+/dev/root       13973220 3469308   9772320  27% /
+/dev/loop1       1510792      24   1415744   1% /mnt
+(rw) localhost /VMs/HD #
+(rw) localhost /VMs/HD # cd /mnt/
+(rw) localhost /mnt # tar -zxf /tmp/fs.tar.gz
+(rw) localhost ~ # route add -net 1.1.1.0 netmask 255.255.255.0 gw 192.168.56.104
+(rw) localhost ~ # route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         10.0.2.2        0.0.0.0         UG    2      0        0 eth0
+1.1.1.0         192.168.56.104  255.255.255.0   UG    0      0        0 BR
+10.0.2.0        0.0.0.0         255.255.255.0   U     0      0        0 eth0
+192.168.56.0    0.0.0.0         255.255.255.0   U     0      0        0 BR
+(rw) localhost ~ # ssh 1.1.1.1
+(rw) localhost ~ #
+ localhost ~ # free -h
+               total        used        free      shared  buff/cache   available
+Mem:           224Mi        15Mi       173Mi       0.0Ki        36Mi       200Mi
+Swap:             0B          0B          0B
+
+localhost ~ # ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 1.1.1.1  netmask 255.255.255.0  broadcast 1.1.1.255
+        ether 08:00:27:00:01:01  txqueuelen 1000  (Ethernet)
+        RX packets 198  bytes 20526 (20.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 158  bytes 18007 (17.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 2.2.2.2  netmask 255.255.255.0  broadcast 2.2.2.255
+        ether 08:00:27:00:01:02  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+localhost ~ #
