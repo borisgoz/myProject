@@ -4,6 +4,17 @@
 (rw) local ~ # gpg --export my_key > gpg.public
 (rw) local ~ # scp gpg.public user@IP:/home/user/
 
+#ascii
+(rw) local ~ # gpg --export --armor my_key_on_host > my_key.asc
+
+VM1 ~ # gpg --list-key
+VM1 ~ # gpg --import my_host_key.asc
+VM1 ~ # gpg -a -r my_key_on_host -e decrypted_text
+VM1 ~ # ls decrypted_text*
+decrypted_text  decrypted_text.asc
+VM1 ~/.gnupg #
+(rw) local ~ # gpg -d decrypted_text.asc > decrypted_text
+
 user@IP ~$ echo secret > myCrypto
 user@IP ~$ gpg --out secretFile --recipient e@mail.com --encrypt myCrypto
 user@IP ~$ scp secretFile local_user@local_IP:/home/user/

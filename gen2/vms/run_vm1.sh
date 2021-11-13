@@ -2,8 +2,8 @@
 #start VM1
 
 NAME=vm1
-RAM_MB=256M
-MAX_RAM_MB=512M
+RAM_MB=512M
+MAX_RAM_MB=1024M
 CORE_COUNT=1
 VM_RAW=/VMs/HD/VM1.raw
 KERNEL=/VMs/kernel/vmlinuz-5.10.52-gentoo
