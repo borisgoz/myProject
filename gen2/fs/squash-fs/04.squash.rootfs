@@ -1,0 +1,11 @@
+(rw) localhost ~ # mkdir /tmp/rootfs
+(rw) localhost ~ # mount / /tmp/rootfs/ -o bind
+(rw) localhost ~ # ls /tmp/rootfs/
+bin   data  etc   lib    lost+found  mnt  proc     root  sbin  tmp  var
+boot  dev   home  lib64  media       opt  product  run   sys   usr
+(rw) localhost ~ #
+(rw) localhost ~ # cp -a /tmp/rootfs/* /tmp/p4/
+(rw) localhost ~ # mksquashfs /tmp/p4/ /tmp/folder/rootfs.squashfs
+(rw) localhost ~ # ls -lh /tmp/folder/
+-rw-r--r-- 1 root root 393M Mar  3 13:48 rootfs.squashfs
+(rw) localhost ~ #

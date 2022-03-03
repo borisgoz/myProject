@@ -1,0 +1,8 @@
+(rw) localhost ~ # mkdir /tmp/p1/
+(rw) localhost ~ # mount /dev/sda1 /tmp/p1/
+(rw) localhost ~ # mkdir /tmp/folder
+(rw) localhost ~ # mksquashfs /tmp/p1/ /tmp/folder/grub.squashfs
+(rw) localhost ~ # ls -lh /tmp/folder/
+-rw-r--r-- 1 root root  37M Mar  3 13:58 grub.squashfs
+(rw) localhost ~ #
+

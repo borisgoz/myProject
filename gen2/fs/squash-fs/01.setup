@@ -1,0 +1,14 @@
+Enable KOs
+CONFIG_SQUASHFS=y
+CONFIG_SQUASHFS_XATTR=y
+CONFIG_SQUASHFS_ZLIB=y
+CONFIG_SQUASHFS_LZ4=y
+ONFIG_SQUASHFS_LZO=y
+CONFIG_SQUASHFS_XZ=y
+CONFIG_SQUASHFS_4K_DEVBLK_SIZE=y
+CONFIG_SQUASHFS_EMBEDDED=y
+CONFIG_SQUASHFS_FRAGMENT_CACHE_SIZE=3
+
+Declaring USE flags for individual packages
+(rw) localhost ~ # echo "sys-fs/squashfs-tools debug lz4 lzma lzo xattr zstd" >> /etc/portage/package.use/squashfs-tools
+(rw) localhost ~ # emerge --ask --changed-use --deep sys-fs/squashfs-tools

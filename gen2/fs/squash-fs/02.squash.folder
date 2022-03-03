@@ -1,0 +1,33 @@
+(rw) localhost ~ # mkdir /tmp/folder
+(rw) localhost ~ # mksquashfs /root /tmp/folder/root.squashfs
+(rw) localhost ~ # mount -o loop /tmp/folder/root.squashfs /mnt/
+(rw) localhost ~ # mount
+/tmp/folder/root.squashfs on /mnt type squashfs (ro,relatime)
+(rw) localhost ~ # umount /mnt/
+(rw) localhost ~ # unsquashfs -d /mnt/ -f /tmp/folder/root.squashfs -e .bashrc
+(rw) localhost ~ # ll /mnt/
+-rw-r--r--  1 root root  812 Feb 14 19:09 .bashrc
+(rw) localhost ~ # ls -lh /tmp/folder/
+-rw-r--r-- 1 root root 4.0K Mar  3 13:08 root.squashfs
+(rw) localhost ~ # cp /tmp/folder/root.squashfs /
+(rw) localhost ~ # mv /root /root.orginall
+(rw) localhost ~ # mkdir /root
+(rw) localhost ~ # tail -n 1 /etc/fstab
+/root.squashfs  /root  squashfs  ro,defaults  0 0
+/root.squashfs  /root  squashfs  rw,defaults  0 0
+/root.squashfs  /root  squashfs  defaults     0 0
+/root.squashfs  /root  squashfs  noatime      0 0
+(rw) localhost ~ #
+(rw) localhost ~ # reboot
+(rw) localhost ~ # mount
+/root.squashfs on /root type squashfs (ro,relatime)
+(rw) localhost ~ # pwd
+/root
+(rw) localhost ~ #
+(rw) localhost ~ # touch file
+touch: cannot touch 'file': Read-only file system
+(rw) localhost ~ #
+(rw) localhost ~ # mount -o remount,rw /root.squashfs /root
+mount: /root: cannot remount /root.squashfs read-write, is write-protected.
+(rw) localhost ~ #
+

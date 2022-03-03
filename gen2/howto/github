@@ -1,0 +1,8 @@
+github:
+myProject > code > clone > ssh > copy
+->^ User > settings > SSH and GPG key > new ssh.key
+
+linux:
+(rw) localhost ~ # ssh-keygen
+(rw) localhost ~ # cat ~/.ssh/id_rsa.pub
+(rw) localhost ~ # git@github.com:borisgoz/myProject.git
