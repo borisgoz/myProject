@@ -1,0 +1,25 @@
+(rw) localhost ~ # emerge --ask sys-boot/syslinux
+(rw) localhost ~ # wget Minimal-Installation-CD
+(rw) localhost ~ # isohybrid install-minimal.iso
+(rw) localhost ~ # dd if=install-minimal.iso of=/dev/sdc bs=8192k
+(rw) localhost ~ # mount /dev/sdc1 /mnt/ISO
+mount: /mnt: WARNING: source write-protected, mounted read-only.
+(rw) localhost ~ # ll /mnt/ISO/
+total 405666
+drwxr-xr-x  6 root root      2048 Feb 27 18:11 ./
+drwxr-xr-x 25 root root      4096 Mar  4 07:48 ../
+drwxr-xr-x  3 root root      2048 Feb 27 18:11 EFI/
+-rw-r--r--  1 root root      7236 Feb 27 18:09 README.txt
+drwxr-xr-x  3 root root      2048 Feb 27 18:09 boot/
+-rw-r--r--  1 root root  11036672 Feb 27 18:11 gentoo.efimg
+drwxr-xr-x  2 root root      2048 Feb 27 18:09 grub/
+-rw-r--r--  1 root root 404340736 Feb 27 18:11 image.squashfs
+drwxr-xr-x  2 root root      4096 Feb 27 18:09 isolinux/
+-rw-r--r--  1 root root         0 Feb 27 18:09 livecd
+(rw) localhost ~ #
+(rw) localhost ~ # mv rootfs.squashfs image.squashfs #update fs
+(rw) localhost ~ #
+(rw) localhost ~ # emerge --ask app-cdr/cdrtools
+(rw) localhost ~ #
+(rw) localhost ~ # mkisofs -r -o /tmp/rootfs.iso /mnt/ISO/
+(rw) localhost ~ #

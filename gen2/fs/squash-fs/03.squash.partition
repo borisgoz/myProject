@@ -4,5 +4,14 @@
 (rw) localhost ~ # mksquashfs /tmp/p1/ /tmp/folder/grub.squashfs
 (rw) localhost ~ # ls -lh /tmp/folder/
 -rw-r--r-- 1 root root  37M Mar  3 13:58 grub.squashfs
+(rw) localhost ~ # mv /tmp/folder/grub.squashfs /
+(rw) localhost ~ # cat /etc/fstab
+#/dev/sda3              /product        ext4            ro                   0 0
+/product.squashfs       /product        squashfs        noatime              0 0
 (rw) localhost ~ #
-
+(rw) localhost ~ # df -h
+/dev/root        21G  1.4G   19G   7% /
+/dev/loop0      128K  128K     0 100% /product
+/dev/loop2      128K  128K     0 100% /root
+/dev/sdb1       125G  5.5G  113G   5% /tmp/sdb1
+(rw) localhost ~ #
