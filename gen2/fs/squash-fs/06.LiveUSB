@@ -1,0 +1,22 @@
+(rw) squash ~ # wget Minimal-Installation-CD
+(rw) squash ~ # fdisk /dev/sdc -> 4GB
+(rw) squash ~ # emerge --ask sys-fs/dosfstools
+(rw) squash ~ # mkfs.fat -F 32 /dev/sdc1
+
+Install MBR from syslinux on the USB drive
+(rw) squash ~ # emerge --ask --verbose sys-boot/syslinux
+
+(rw) squash ~ # mkdir -p /mnt/cdrom
+(rw) squash ~ # mount -o loop,ro -t iso9660 install-minimal.iso /mnt/cdrom
+
+(rw) squash ~ # cp -r /mnt/cdrom/* /mnt/usb
+(rw) squash ~ # mv /mnt/usb/isolinux/* /mnt/usb
+(rw) squash ~ # mv /mnt/usb/isolinux.cfg /mnt/usb/syslinux.cfg
+(rw) squash ~ # rm -rf /mnt/usb/isolinux*
+(rw) squash ~ # mv /mnt/usb/memtest86 /mnt/usb/memtest
+(rw) squash ~ # umount /mnt/cdrom
+(rw) squash ~ # sed -i -e "s:cdroot:cdroot slowusb:" -e "s:kernel memtest86:kernel memtest:" /mnt/usb/syslinux.cfg
+(rw) squash ~ # umount /mnt/usb
+
+install the syslinux bootloader on the USB drive
+(rw) squash ~ # syslinux /dev/sdc1
