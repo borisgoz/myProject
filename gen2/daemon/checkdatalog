@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# file:        /opt/bin/checkdatalog
+# description: checking folder size
+# date:        2022/03/16-ver01
+
+REASON=0
+DAEMON=checkdatalog
+LOGFILE=/var/log/$DAEMON.log
+
+case "$1" in
+    start)
+	echo "$(date +%F): service $DAEMON started" >> $LOGFILE
+        /opt/bin/checkdatalog.sh &
+        echo $! > /tmp/$DAEMON.pid
+        ;;
+
+    stop)
+	if [ -e /tmp/$DAEMON.pid ]; then kill `cat /tmp/$DAEMON.pid`; fi
+	if [ $? -eq 0 ]; then echo "$(date +%F): service $DAEMON stopped" >> $LOGFILE; fi
+        if [ -e /tmp/$DAEMON.pid ]; then rm /tmp/$DAEMON.pid; fi
+        ;;
+
+    restart)
+        $0 stop
+        $0 start
+        ;;
+
+    status)
+        if [ -e /tmp/$DAEMON.pid ]; then
+            echo "$DAEMON is running, pid=$(cat /tmp/$DAEMON.pid)"
+        else
+            echo "$DAEMON is NOT running"
+	    REASON=1
+        fi
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+esac
+
+echo $REASON
+exit $REASON
+#END
