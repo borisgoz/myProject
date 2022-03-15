@@ -1,0 +1,3 @@
+shc -v -r -f script.sh
+mv script.sh.x script
+mv script.sh.x.c script.c
