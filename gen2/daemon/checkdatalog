@@ -11,13 +11,17 @@ LOGFILE=/var/log/$DAEMON.log
 case "$1" in
     start)
 	echo "$(date +%F): service $DAEMON started" >> $LOGFILE
+	echo "$(date +%F): service $DAEMON started"
         /opt/bin/checkdatalog.sh &
         echo $! > /tmp/$DAEMON.pid
         ;;
 
     stop)
 	if [ -e /tmp/$DAEMON.pid ]; then kill `cat /tmp/$DAEMON.pid`; fi
-	if [ $? -eq 0 ]; then echo "$(date +%F): service $DAEMON stopped" >> $LOGFILE; fi
+	if [ $? -eq 0 ]; then
+		echo "$(date +%F): service $DAEMON stopped" >> $LOGFILE
+		echo "$(date +%F): service $DAEMON stopped"
+	fi
         if [ -e /tmp/$DAEMON.pid ]; then rm /tmp/$DAEMON.pid; fi
         ;;
 
