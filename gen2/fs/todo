@@ -1,0 +1,191 @@
+HOW2Gentoo
+
+/dev/sda1	boot
+/dev/sda2	/
+/dev/sda3	swap
+ 
+Command (m for help):p
+Disk /dev/sda: 30.0 GB, 30005821440 bytes
+240 heads, 63 sectors/track, 3876 cylinders
+Units = cylinders of 15120 * 512 = 7741440 bytes
+
+Device    Boot    Start       End    Blocks   Id  System
+/dev/sda1   *         3        14    506520+  83  Linux
+/dev/sda2            15        81    28690200 83  Linux
+/dev/sda3            82        3876  506520   82  Linux swap
+
+root# net-setup eth0
+root# mkfs.ext4 /dev/sda1
+root# mkfs.ext4 /dev/sda2
+root# mkswap /dev/sda3
+root# swapon /dev/sda3
+root# mount /dev/sda2 /mnt/gentoo
+root# mkdir /mnt/gentoo/boot
+root# mount /dev/sda1 /mnt/gentoo/boot
+root# date 032410302022  # 24.03.2022 10:30
+
+root# cd /mnt/gentoo
+root# links https://www.gentoo.org/downloads/mirrors/stage3.tat.gz
+root# tar xvjpf stage3-*.tar.bz2 --xattrs
+
+root# nano -w /mnt/gentoo/etc/portage/make.conf
+CFLAGS="-O2 -pipe" 
+# Use the same settings for both variables
+CXXFLAGS="${CFLAGS}"
+MAKEOPTS="-j8"
+
+root# mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
+root# mkdir /mnt/gentoo/etc/portage/repos.conf
+root# cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+root# cp -L /etc/resolv.conf /mnt/gentoo/etc/
+
+root# mount -t proc proc /mnt/gentoo/proc
+root# mount --rbind /sys /mnt/gentoo/sys
+root# mount --make-rslave /mnt/gentoo/sys
+root# mount --rbind /dev /mnt/gentoo/dev
+root# mount --make-rslave /mnt/gentoo/dev
+root# rm /dev/shm && mkdir /dev/shm
+root# mount -t tmpfs -o nosuid,nodev,noexec shm /dev/shm
+root# chmod 1777 /dev/shm
+
+root# chroot /mnt/gentoo /bin/bash
+root# source /etc/profile
+root# export PS1="(chroot) $PS1"
+
+root# emerge-webrsync
+root# emerge --sync
+root# eselect profile list
+root# eselect profile set [number]
+root# eselect profile list
+root# emerge --ask --update --deep --newuse @world
+
+root# emerge --info | grep ^USE
+USE="X acl alsa amd64 berkdb bindist bzip2 cli cracklib crypt cxx dri ..."
+
+root# less /usr/portage/profiles/use.desc
+USE="-gnome -kde -qt4 -minimal gtk dvd alsa cdr dbus X udev session lock jpeg startup-notification thunar policykit udisks"
+INPUT_DEVICES="evdev synaptics"
+VIDEO_CARDS="nouveau"
+VIDEO_CARDS="radeon"
+CPU_FLAGS_X86=""
+root# emerge --ask app-portage/cpuinfo2cpuflags
+root# cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
+
+root# ls /usr/share/zoneinfo
+root# echo "Asia/Jerusalem" > /etc/timezone
+root# emerge --config sys-libs/timezone-data
+root# nano -w /etc/locale.gen
+    en_US ISO-8859-1
+    en_US.UTF-8 UTF-8
+root# locale-gen
+root# eselect locale list
+root# eselect locale set [number]
+root# env-update && source /etc/profile && export PS1="(chroot) $PS1"
+root# nano -w /etc/fstab
+/dev/sda1   /boot   ext4    defaults    0 2
+
+root# ln -sf /proc/self/mounts /etc/mtab
+root# emerge --ask --unmerge sys-kernel/genkernel
+root# emerge --ask sys-kernel/dracut
+root# nano -w /etc/dracut/dracut.conf
+    # Dracut modules to add to the default
+    add_dracutmodules+="usrmount"
+root# emerge --ask sys-kernel/gentoo-sources
+root# emerge --ask sys-kernel/genkernel-next
+    /etc/genkernel.conf
+    UDEV="yes"
+root# genkernel --install all
+root# genkernel --udev --lvm --mdadm initramfs
+root# nano -w /etc/lvm/lvm.conflvm.conf
+    # Set use_lvmetad to '1' for systemd
+    use_lvmetad = 1
+root# nano -w /etc/portage/profile/packages
+    # Remove OpenRC from the system profile when using systemd
+    -*sys-apps/openrc
+root# emerge -avDN @world
+root# emerge --deselect sys-fs/udev
+
+GRUB_CMDLINE_LINUX:
+/etc/default/grub GRUB2 systemd
+# Append parameters to the linux kernel command line
+GRUB_CMDLINE_LINUX="init=/usr/lib/systemd/systemd"
+/boot/grub/grub.cfg GRUB2 
+linux /vmlinuz-5.15.26 root=UUID=508868e4-54c6-4e6b-84b0-b3b28b1656b6 init=/usr/lib/systemd/systemd0
+
+root# emerge --ask sys-kernel/gentoo-sources
+root# emerge --ask sys-apps/pciutils
+root# cd /usr/src/linux
+root# make menuconfig
+root# make && make modules_install
+root# make install
+root# emerge --ask sys-kernel/genkernel
+root# emerge genkernel
+root# genkernel --lvm --mdadm --install initramfs
+
+root# emerge --ask sys-kernel/gentoo-sources
+root# emerge --ask sys-kernel/genkernel
+root# nano -w /etc/fstab
+/dev/sda1   /boot        ext4    defaults             0 2
+root# genkernel all
+
+root# find /lib/modules/<kernel version>/ -type f -iname '*.o' -or -iname '*.ko' | less
+root# nano -w /etc/conf.d/modules
+modules="3c59x"
+root# emerge --ask sys-kernel/linux-firmware
+
+root# nano -w /etc/fstab
+/dev/sda1   /boot        ext4    defaults             0 2
+/dev/sda2   /            ext4    defaults             0 1
+/dev/sda3   none         swap    sw                   0 0
+/dev/cdrom  /mnt/cdrom   auto    noauto,user          0 0
+
+root# nano -w /etc/conf.d/hostname
+root# nano -w /etc/hosts
+root# emerge --ask --noreplace net-misc/netifrc
+root# nano -w /etc/conf.d/net
+config_eth0="192.168.0.2 netmask 255.255.255.0 brd 192.168.0.255"
+routes_eth0="default via 192.168.0.1"
+#config_eth0="dhcp"
+
+root# cd /etc/init.d
+root# ln -s net.lo net.eth0
+root# rc-update add net.eth0 default
+root# ln -s net.lo net.enp0s3
+root# rc-update add net.enp0s3 default
+root# emerge --ask net-misc/dhcpcd
+root# passwd
+root# nano -w /etc/conf.d/hwclock
+root# emerge --ask app-admin/sysklogd
+root# rc-update add sysklogd default
+root# emerge --ask sys-process/cronie
+root# rc-update add cronie default
+root# crontab /etc/crontab
+root# rc-update add sshd default
+
+root# emerge --ask sys-boot/grub:2
+root# grub2-install /dev/sda
+root# grub2-mkconfig -o /boot/grub/grub.cfg
+
+root# exit
+root# cd ~
+root# umount -l /mnt/gentoo/dev{/shm,/pts,}
+root# umount /mnt/gentoo{/boot,/sys,/proc,}
+root# reboot
+
+root# useradd -m -G users,wheel,audio -s /bin/bash [username] 
+root# passwd [username]
+root# rm /stage3-*.tar.bz2*
+
+Xorg-x11
+/etc/portage/make.conf USE
+USE="-gnome -kde -qt4 -minimal gtk dvd alsa cdr dbus X udev session lock jpeg startup-notification thunar policykit udisks"
+root# emerge --ask x11-base/xorg-x11
+root# env-update && source /etc/profile 
+USE="-gnome -kde -minimal -qt4 dbus jpeg lock session startup-notification thunar udev X"
+
+root# emerge --ask xfce-base/xfce4-meta
+root# for x in cdrom cdrw usb ; do gpasswd -a username $x ; done
+root# env-update && source /etc/profile
+root# emerge --ask x11-terms/xfce4-terminal
+root# echo "exec startxfce4" > ~/.xinitrc
+root# startx

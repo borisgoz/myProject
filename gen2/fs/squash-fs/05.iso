@@ -23,3 +23,20 @@ drwxr-xr-x  2 root root      4096 Feb 27 18:09 isolinux/
 (rw) localhost ~ #
 (rw) localhost ~ # mkisofs -r -o /tmp/rootfs.iso /mnt/ISO/
 (rw) localhost ~ #
+
+(rw) squash ~ #
+(rw) squash ~ # mount /dev/sdc1 /mnt/ISO/
+(rw) squash ~ # genkernel --install --no-ramdisk-modules initramfs
+* You will find the initramfs in '/boot/initramfs-5.10.100-x86_64.img'.
+(rw) squash ~ #
+(rw) squash ~ # rm /mnt/ISO/boot/gentoo
+(rw) squash ~ # rm /mnt/ISO/boot/gentoo-config
+(rw) squash ~ # rm /mnt/ISO/boot/System-gentoo.map
+(rw) squash ~ #
+(rw) squash ~ # cp /boot/initramfs-5.10.100-x86_64.img /mnt/ISO/boot/
+(rw) squash ~ # cp /boot/config-5.10.100 /mnt/ISO/boot/gentoo-config
+(rw) squash ~ # cp /boot/vmlinuz-5.10.100 /mnt/ISO/boot/gentoo
+(rw) squash ~ # cp /boot/System.map-5.10.100 /mnt/ISO/boot/System-gentoo.map
+(rw) squash ~ #
+(rw) squash ~ # mkisofs -r -o /tmp/rootfs.iso /mnt/ISO/
+(rw) squash ~ #
