@@ -1,0 +1,65 @@
+(rw) squash ~ # mkdir --parents /usr/src/initramfs/{bin,dev,etc,lib,lib64,mnt/root,proc,root,sbin,sys}
+(rw) squash ~ # cp --archive /bin/busybox /usr/src/initramfs/bin/busybox
+(rw) squash ~ # ldd /usr/src/initramfs/bin/busybox
+(rw) squash ~ # cp /lib64/libpam.so.0 /lib64/libpam_misc.so.0 /lib64/libresolv.so.2 /lib64/libc.so.6 /lib64/libdl.so.2 /usr/src/initramfs/lib64/
+(rw) squash ~ # cp /lib64/ld-linux-x86-64.so.2 /usr/src/initramfs/lib64/
+(rw) squash ~ # cp --archive /dev/{null,console,tty,sda1} /usr/src/initramfs/dev/
+(rw) squash ~ # cp --archive /dev/{sr0,loop0} /usr/src/initramfs/dev/
+(rw) squash ~ # cd /usr/src/initramfs
+(rw) squash /usr/src/initramfs # find . -print0 | cpio --null --create --verbose --format=newc | gzip --best > /boot/custom-initramfs.cpio.gz
+(rw) squash /usr/src/initramfs # cd /usr/src/
+(rw) squash /usr/src # cp /boot/custom-initramfs.cpio.gz /mnt/ISO/boot/
+(rw) squash /usr/src # linux/usr/gen_init_cpio initramfs.list > initramfs.cpio
+(rw) squash /usr/src # gzip --best initramfs.cpio
+(rw) squash /usr/src # mv initramfs.cpio.gz /mnt/ISO/boot/
+(rw) squash /usr/src # mkisofs -r -o /tmp/rootfs.iso /mnt/ISO/
+
+(rw) squash ~ # tree /usr/src/initramfs
+/usr/src/initramfs
+├── bin
+│   ├── bash
+│   └── busybox
+├── dev
+│   ├── console
+│   ├── loop-control
+│   ├── loop0
+│   ├── loop1
+│   ├── loop2
+│   ├── loop3
+│   ├── loop4
+│   ├── loop5
+│   ├── loop6
+│   ├── loop7
+│   ├── null
+│   ├── sda
+│   ├── sda1
+│   ├── sda2
+│   ├── sda3
+│   ├── sda4
+│   ├── sda5
+│   ├── shm
+│   ├── sr0
+│   └── tty
+├── etc
+├── init
+├── init.old
+├── lib
+├── lib64
+│   ├── ld-linux-x86-64.so.2
+│   ├── libc.so.6
+│   ├── libdl.so.2
+│   ├── libpam.so.0
+│   ├── libpam_misc.so.0
+│   ├── libreadline.so.8
+│   ├── libresolv.so.2
+│   ├── libtinfo.so.6
+│   └── libtinfow.so.6
+├── mnt
+│   └── root
+├── proc
+├── root
+├── sbin
+└── sys
+
+12 directories, 32 files
+(rw) squash ~ #

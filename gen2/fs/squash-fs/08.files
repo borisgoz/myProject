@@ -51,3 +51,73 @@ Max brk space used 1a000
 228655 extents written (446 MB)
 
 (rw) squash ~ #
+
+(rw) squash ~ # cat /usr/src/initramfs/init
+#!/bin/busybox sh
+mount -t proc none /proc
+mount -t sysfs none /sys
+mkdir /mnt/cdrom
+mkdir /mnt/livecd
+echo "This script just mounts and boots the rootfs, nothing else!"
+mount /dev/sr0 /mnt/cdrom
+mount -o loop /mnt/cdrom/image.squashfs /mnt/livecd
+mount -t proc proc /mnt/livecd/proc
+mount --rbind /sys /mnt/livecd/sys
+mount --make-rslave /mnt/livecd/sys
+mount --rbind /dev /mnt/livecd/dev
+mount --make-rslave /mnt/livecd/dev
+mount -t tmpfs -o nosuid,nodev,noexec shm /dev/shm
+chmod 1777 /dev/shm
+chroot /mnt/livecd /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+(rw) squash ~ #
+
+(rw) squash /usr/src/initramfs # find . -print0 | cpio --null --create --verbose --format=newc | gzip --best > /boot/custom-initramfs.cpio.gzzzzzzzzzz
+.
+./lib64
+./lib64/libtinfow.so.6
+./lib64/libresolv.so.2
+./lib64/libreadline.so.8
+./lib64/ld-linux-x86-64.so.2
+./lib64/libc.so.6
+./lib64/libpam_misc.so.0
+./lib64/libtinfo.so.6
+./lib64/libdl.so.2
+./lib64/libpam.so.0
+./sys
+./proc
+./bin
+./bin/bash
+./bin/busybox
+./sbin
+./etc
+./root
+./init.old
+./mnt
+./mnt/root
+./init
+./dev
+./dev/tty
+./dev/loop7
+./dev/sr0
+./dev/loop6
+./dev/sda4
+./dev/sda5
+./dev/loop1
+./dev/sda3
+./dev/sda2
+./dev/loop5
+./dev/null
+./dev/loop-control
+./dev/sda1
+./dev/sda
+./dev/loop4
+./dev/loop2
+./dev/shm
+./dev/loop0
+./dev/loop3
+./dev/console
+./lib
+9800 blocks
+(rw) squash /usr/src/initramfs #
