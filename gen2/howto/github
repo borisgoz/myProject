@@ -6,3 +6,12 @@ linux:
 (rw) localhost ~ # ssh-keygen
 (rw) localhost ~ # cat ~/.ssh/id_rsa.pub
 (rw) localhost ~ # git@github.com:borisgoz/myProject.git
+
+$ git config --global user.name "Boris G"
+$ git config --global user.email "boris@g.co.il"
+$ cat .gitconfig 
+[user]
+	name = Boris G
+	email = boris@g.co.il
+boris@boris-VirtualBox:~$ 
+

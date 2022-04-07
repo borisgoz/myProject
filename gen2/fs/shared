@@ -1,0 +1,14 @@
+sudo apt-get updatea
+sudo apt-get upgrade
+sudo apt-get install git geany meld net-tools
+sudo apt-get install gcc make perl
+sudo apt-get install virtualbox-guest-dkms
+sudo apt-get install virtualbox-guest-utils
+sudo apt-get install nfs-common cifs-utils
+sudo apt autoremove
+sudo adduser $USER vboxsf
+mkdir /home/boris/Desktop/shared/
+
+sudo nano /etc/fstab
+shared /home/boris/Desktop/shared/ vboxsf defaults 0 0
+
