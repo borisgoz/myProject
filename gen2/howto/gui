@@ -1,0 +1,25 @@
+#!/bin/bash
+echo SLIM_GUI_Xfce
+eselect profile list
+eselect profile set 5
+emerge --ask xfce-base/xfce4-meta
+for x in cdrom cdrw usb ; do gpasswd -a EVERY-USER $x ; done
+emerge --ask xfce-extra/xfce4-pulseaudio-plugin
+emerge --ask xfce-extra/xfce4-taskmanager
+emerge --ask x11-themes/xfwm4-themes
+emerge --ask app-editors/mousepad
+rc-update add dbus default
+rc-update add display-manager default
+echo XSESSION=\"Xfce4\" > /etc/env.d/90xsession
+rc-update add display-manager default
+rc-update add xdm default
+emerge --ask x11-misc/slim
+
+env-update
+nano /etc/conf.d/display-manager
+ 14: DISPLAYMANAGER="slim"
+nano /etc/slim.conf
+ 82: default_user        simone
+ 90: auto_login          yes
+reboot
+#end

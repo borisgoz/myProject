@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------#
+# Script        : remount                                              #
+# Date          : 2022-08-18                                           #
+# Version       : 1.0                                                  #
+# Author        : Boris                                                #
+# E-mail        : boris@                                               #
+# Purpose       : this routine                                         #
+#----------------------------------------------------------------------#
+
+REASON=0
+
+MSG="script OK"
+
+if [ "$EUID" -ne 0 ]; then REASON=2; MSG="Please run as SUDO. no make changes"; fi
+
+if [ "$REASON" -eq 0 ]; then lsblk | grep mmc &>/dev/null; MMC=$?
+
+if [ $MMC == 0 ]; then mount -o remount,rw /dev/mmcblk1p3 /product
+else                   mount -o remount,rw /dev/sda3      /product; fi
+
+fi
+
+echo
+echo -e $MSG
+echo $REASON
+exit $REASON
+
+#======================================================================+
+# Values of REASONs                                                    |
+#=======+==============================================================+
+#     0 | All OK                                                       |
+#-------+--------------------------------------------------------------+
+#     2 | failed -- not ROOT                                           |
+#=======+==============================================================+
+
+#END
