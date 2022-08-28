@@ -1,0 +1,47 @@
+https://wiki.gentoo.org/wiki/Local_Mirror
+
+$ cat /etc/rsyncd.conf
+pid file = /run/rsyncd.pid
+max connections = 5
+use chroot = yes
+uid = nobody
+gid = nobody
+# Optional: restrict access to some Gentoo boxes
+hosts allow = 192.168.0.1 192.168.0.2 192.168.1.0/24
+hosts deny  = *
+motd file = /etc/rsync/rsyncd.motd
+  
+[gentoo-portage]
+path=/var/db/repos/gentoo
+comment=Gentoo Ebuild Repository
+
+####################################################
+
+$ rc-update add rsyncd default
+
+$ rsync 127.0.0.1::
+gentoo-portage  Gentoo Ebuild Repository
+
+$ rsync 127.0.0.1::gentoo-portage
+drwxr-xr-x          4,096 2022/08/28 12:18:07 .
+-rw-r--r--          1,349 2022/08/28 11:40:20 Manifest
+-rw-r--r--         29,618 2022/08/28 11:40:20 Manifest.files.gz
+...
+
+FW open TCP port 873
+
+#####################################################
+
+Configuring the clients:
+$ nano /etc/portage/repos.conf/gentoo-mirror.conf
+# replace HOST_IP with the local IP address of the host machine
+
+[gentoo]
+location = /var/db/repos/gentoo
+sync-type = rsync
+sync-uri = rsync://HOST_IP/gentoo-portage
+#other options here
+
+$ emerge --sync
+$ emerge --ask --update --newuse --deep --with-bdeps=y @world
+$ emerge --depclean
