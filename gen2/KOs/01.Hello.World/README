@@ -1,0 +1,48 @@
+(rw) localhost ~/hello # make clean
+rm -rf .hello* *.o *.ko *.mod *.mod.c *.order *symvers *.cmd .*.cmd .tmp_versions
+(rw) localhost ~/hello # ll
+-rw-r--r-- 1 root root  284 Sep 23 20:41 Makefile
+-rw-r--r-- 1 root root  337 Sep 23 20:36 hello.c
+(rw) localhost ~/hello # make
+make -C /lib/modules/5.15.65-rt49/build M=/root/hello modules
+make[1]: Entering directory '/usr/src/linux-5.15.65-rt49'
+  CC [M]  /root/hello/hello.o
+  MODPOST /root/hello/Module.symvers
+  CC [M]  /root/hello/hello.mod.o
+  LD [M]  /root/hello/hello.ko
+make[1]: Leaving directory '/usr/src/linux-5.15.65-rt49'
+(rw) localhost ~/hello # ll
+-rw-r--r-- 1 root root   280 Sep 23 20:46 .Module.symvers.cmd
+-rw-r--r-- 1 root root   333 Sep 23 20:46 .hello.ko.cmd
+-rw-r--r-- 1 root root   208 Sep 23 20:46 .hello.mod.cmd
+-rw-r--r-- 1 root root 30787 Sep 23 20:46 .hello.mod.o.cmd
+-rw-r--r-- 1 root root 29490 Sep 23 20:46 .hello.o.cmd
+-rw-r--r-- 1 root root   234 Sep 23 20:46 .modules.order.cmd
+-rw-r--r-- 1 root root   284 Sep 23 20:41 Makefile
+-rw-r--r-- 1 root root     0 Sep 23 20:46 Module.symvers
+-rw-r--r-- 1 root root   337 Sep 23 20:36 hello.c
+-rw-r--r-- 1 root root  4312 Sep 23 20:46 hello.ko
+-rw-r--r-- 1 root root    60 Sep 23 20:46 hello.mod
+-rw-r--r-- 1 root root   581 Sep 23 20:46 hello.mod.c
+-rw-r--r-- 1 root root  2664 Sep 23 20:46 hello.mod.o
+-rw-r--r-- 1 root root  2264 Sep 23 20:46 hello.o
+-rw-r--r-- 1 root root    60 Sep 23 20:46 modules.order
+(rw) localhost ~/hello # lsmod
+Module                  Size  Used by
+efivarfs               16384  1
+(rw) localhost ~/hello # insmod hello.ko
+(rw) localhost ~/hello # lsmod
+Module                  Size  Used by
+hello                  16384  0
+efivarfs               16384  1
+(rw) localhost ~/hello # rmmod hello.ko
+(rw) localhost ~/hello # lsmod
+Module                  Size  Used by
+efivarfs               16384  1
+(rw) localhost ~/hello #
+
+(rw) localhost ~ # dmesg -c
+(rw) localhost ~ # dmesg -w
+[ 3591.479147] Hello, world
+[ 3605.381741] Goodbye, cruel world
+
