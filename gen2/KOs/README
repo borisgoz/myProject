@@ -1,0 +1,14 @@
+/usr/src/linux/include/linux/*.h
+(rw) localhost # ll /proc/modules
+-r--r--r-- 1 root root 0 Sep 23 19:58 /proc/modules
+(rw) localhost # cat /proc/modules
+hello 16384 0 - Live 0xffffffffc0186000 (O)
+efivarfs 16384 1 - Live 0xffffffffc0181000
+(rw) localhost /usr/src/linux # cat include/generated/uapi/linux/version.h      #define LINUX_VERSION_CODE 331585
+#define KERNEL_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + ((c) > 255 ? 255 : (c)))
+#define LINUX_VERSION_MAJOR 5
+#define LINUX_VERSION_PATCHLEVEL 15
+#define LINUX_VERSION_SUBLEVEL 65
+(rw) localhost /usr/src/linux #
+
+(rw) localhost #
