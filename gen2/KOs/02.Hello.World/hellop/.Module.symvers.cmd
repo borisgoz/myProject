@@ -1,0 +1,1 @@
+cmd_/root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/Module.symvers := sed 's/\.ko$$/\.o/' /root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/modules.order | scripts/mod/modpost    -o /root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/Module.symvers -e -i Module.symvers   -T -

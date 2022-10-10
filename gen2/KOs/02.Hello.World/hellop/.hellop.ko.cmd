@@ -1,0 +1,1 @@
+cmd_/root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/hellop.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/hellop.ko /root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/hellop.o /root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/hellop.mod.o;  true

@@ -46,3 +46,51 @@ efivarfs               16384  1
 [ 9298.213302] Hello, world
 [ 9298.213305] The process is "insmod" (pid 8862)
 [ 9375.877943] Goodbye, cruel world
+How to use
+
+step 1: build source
+			make
+
+step 2: insert module to kernel, execute command:
+			insmod hellop.ko howmany=10 whom="Mom"
+		check module install success
+			lsmod | grep hellop
+
+step 3: check the result (print "hello, Mom" 10 times)
+		execute commamd 
+			dmesg 
+		or 
+			grep "hello" /var/log/message
+
+step 4: remove module
+			rmmode hellop
+		and use command to check remove success
+			lsmod | grep hellop
+
+step 5: clean project
+			make clean
+
+
+
+----------------------------------------------------------
+
+(rw) localhost # insmod hellop.ko
+(rw) localhost # rmmod hellop
+(rw) localhost # insmod hellop.ko howmany=3
+(rw) localhost # insmod hellop.ko howmany=2 whom="Mom"
+insmod: ERROR: could not insert module hellop.ko: File exists
+(rw) localhost # rmmod hellop
+(rw) localhost # insmod hellop.ko howmany=2 whom="Mom"
+
+[  840.531142] hellop: loading out-of-tree module taints kernel.
+[  840.532245] hello, world
+[  857.460388] Goodbye, cruel world
+[  880.810564] hello: unknown parameter '3' ignored
+[  880.810600] hello, world
+[  890.814711] Goodbye, cruel world
+[  988.747745] hello, world
+[  988.747750] hello, world
+[  988.747752] hello, world
+[ 1021.118271] Goodbye, cruel world
+[ 1023.742350] hello, Mom
+[ 1023.742353] hello, Mom

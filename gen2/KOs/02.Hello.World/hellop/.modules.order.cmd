@@ -1,0 +1,1 @@
+cmd_/root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/modules.order := {   echo /root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/hellop.ko; :; } | awk '!x[$$0]++' - > /root/gen2/myProject/gen2/KOs/03.Hello.World/hellop/modules.order
