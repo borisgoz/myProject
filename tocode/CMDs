@@ -15,3 +15,8 @@ git rm -r  --> rmdir -r
 git rm -r --cached --> from cashe
 
 git commit -am 
+
+git checkout <rev> -- <file>
+git checkout <rev>
+git checkout master
+
