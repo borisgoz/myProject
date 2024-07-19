@@ -1,0 +1,517 @@
+boris@2204:~/my_local_git$ pwd
+/home/boris/my_local_git
+boris@2204:~/my_local_git$ git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/boris/my_local_git/.git/
+
+
+boris@2204:~/my_local_git$ cat helloworld.sh 
+#!/bin/bash
+echo hello world
+#end
+
+boris@2204:~/my_local_git$ git add .
+boris@2204:~/my_local_git$ echo README >> .gitignore 
+boris@2204:~/my_local_git$ echo .README.swp >> .gitignore 
+boris@2204:~/my_local_git$ git rm --cached README 
+boris@2204:~/my_local_git$ git status 
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   .gitignore
+	new file:   helloworld.sh
+
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git commit 
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'boris@2204.(none)')
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git config --global user.email boris@me.co.il
+boris@2204:~/my_local_git$ git config --global user.name Boris Goozman
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ ll ~/.gitconfig 
+-rw-rw-r-- 1 boris boris 51 Jul 18 23:29 /home/boris/.gitconfig
+boris@2204:~/my_local_git$ cat ~/.gitconfig 
+[user]
+	email = boris@me.co.il
+	name = Boris Goozman
+
+boris@2204:~/my_local_git$ git commit 
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#       new file:   .gitignore
+#       new file:   helloworld.sh
+#
+
+-->
+
+
+initial commit
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#       new file:   .gitignore
+#       new file:   helloworld.sh
+#
+
+Ctrl + O 
+Ctrl + X
+
+[master (root-commit) 61c13b3] initial commit
+ 2 files changed, 5 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100755 helloworld.sh
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git status 
+On branch master
+nothing to commit, working tree clean
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git log
+commit 61c13b37aa4cd1f116e426bdb44dc1b575a732f8 (HEAD -> master)
+Author: Boris Goozman <boris@me.co.il>
+Date:   Thu Jul 18 23:32:02 2024 +0300
+
+    initial commit
+boris@2204:~/my_local_git$ 
+
+boris@2204:~/my_local_git$ git cat-file commit 61c13
+tree b51494769fef79ec261fdc2c9f748e015e864239
+author Boris Goozman <boris@me.co.il> 1721334722 +0300
+committer Boris Goozman <boris@me.co.il> 1721334722 +0300
+
+initial commit
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git ls-tree 61c13
+100644 blob 947b8eb6097b17cac0019bb9e9e7a928feb39ceb	.gitignore
+100755 blob 9b05b28e5285fc4f510b2da3364fd8322a5d6f5e	helloworld.sh
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git cat-file blob 9b05b
+#!/bin/bash
+echo hello world
+#end
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ cat helloworld.sh 
+#!/bin/bash
+function HW {
+  echo hello world
+}
+
+HW
+
+#end
+boris@2204:~/my_local_git$ ./helloworld.sh 
+hello world
+boris@2204:~/my_local_git$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   helloworld.sh
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/my_local_git$ git add helloworld.sh 
+boris@2204:~/my_local_git$ git status 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   helloworld.sh
+
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git commit -m "support function"
+[master 63edd01] support function
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+boris@2204:~/my_local_git$ git status 
+On branch master
+nothing to commit, working tree clean
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git log
+commit 63edd01b11e438e505369c78bc9d0b3d5f8591e5 (HEAD -> master)
+Author: Boris Goozman <boris@me.co.il>
+Date:   Thu Jul 18 23:48:45 2024 +0300
+
+    support function
+
+commit 61c13b37aa4cd1f116e426bdb44dc1b575a732f8
+Author: Boris Goozman <boris@me.co.il>
+Date:   Thu Jul 18 23:32:02 2024 +0300
+
+    initial commit
+boris@2204:~/my_local_git$ 
+boris@2204:~/my_local_git$ git cat-file commit 63edd
+tree 4418531842b8b9b26f0a399875a0a933dbff4b89
+parent 61c13b37aa4cd1f116e426bdb44dc1b575a732f8
+author Boris Goozman <boris@me.co.il> 1721335725 +0300
+committer Boris Goozman <boris@me.co.il> 1721335725 +0300
+
+support function
+boris@2204:~/my_local_git$ 
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ cat helloworld.sh 
+#!/bin/bash -x
+. functions.sh
+HW
+#end
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ cat functions.sh 
+function HW() {
+    echo hello world
+}
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+	modified:   helloworld.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	functions.sh
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject$ git add .
+boris@2204:~/PycharmProjects/helloworld/pythonProject$ cd -
+/home/boris/PycharmProjects/helloworld/pythonProject/.venv
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   ../.idea/workspace.xml
+	new file:   functions.sh
+	modified:   helloworld.sh
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git reset ../.idea/
+Unstaged changes after reset:
+M	.idea/workspace.xml
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   functions.sh
+	modified:   helloworld.sh
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git ls-files --stage -- helloworld.sh
+100644 fd14fae625e9c25eff23f948008817d0f5385055 0	helloworld.sh
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file blob fd14f
+#!/bin/bash -x
+. functions.sh
+HW
+#end
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   functions.sh
+	modified:   helloworld.sh
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git commit -m "update my file"
+[master 843b53d] update my file
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+ create mode 100644 .venv/functions.sh
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git add ../.
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   ../.idea/workspace.xml
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git commit -m "i dont care"
+[master 4f6e77a] i dont care
+ 1 file changed, 61 insertions(+), 11 deletions(-)
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status
+On branch master
+nothing to commit, working tree clean
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+	modified:   functions.sh
+	modified:   helloworld.sh
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git add helloworld.sh 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git rm functions.sh 
+error: the following file has local modifications:
+    .venv/functions.sh
+(use --cached to keep the file, or -f to force removal)
+orisg1@D-C-BORIS-L-RF1:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    functions.sh
+	modified:   helloworld.sh
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git commit -m 'back to main'
+[master 4002464] back to main
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+ delete mode 100644 .venv/functions.sh
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+nothing to commit, working tree clean
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file commit HEAD
+tree 64ece06f7f2812245de94493daaa532f5c7be901
+parent 4f6e77a8d74d706b0ddf8fa9de0c8f4f81fb85cd
+author Boris Goozman <boris@me.co.il> 1721389427 +0300
+committer Boris Goozman <boris@me.co.il> 1721389427 +0300
+
+back to main
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file commit HEAD^
+tree f9ae1abeac2a06a08e0ef88822de69ae460f9b7e
+parent 843b53d6124e7b18e256552a106ac47d147a744b
+author Boris Goozman <boris@me.co.il> 1721387625 +0300
+committer Boris Goozman <boris@me.co.il> 1721387625 +0300
+
+i dont care
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file commit HEAD
+tree 64ece06f7f2812245de94493daaa532f5c7be901
+parent 4f6e77a8d74d706b0ddf8fa9de0c8f4f81fb85cd
+author Boris Goozman <boris@me.co.il> 1721389427 +0300
+committer Boris Goozman <boris@me.co.il> 1721389427 +0300
+
+back to main
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file commit HEAD~1
+tree f9ae1abeac2a06a08e0ef88822de69ae460f9b7e
+parent 843b53d6124e7b18e256552a106ac47d147a744b
+author Boris Goozman <boris@me.co.il> 1721387625 +0300
+committer Boris Goozman <boris@me.co.il> 1721387625 +0300
+
+i dont care
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file commit HEAD~2
+tree 543f1902df030a42249dbb0f27f71899617310cd
+parent 22dd358e2c3a040e072ff3c4b74120eb5b989423
+author Boris Goozman <boris@me.co.il> 1721387536 +0300
+committer Boris Goozman <boris@me.co.il> 1721387536 +0300
+
+update my file
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file commit HEAD~1
+tree f9ae1abeac2a06a08e0ef88822de69ae460f9b7e
+parent 843b53d6124e7b18e256552a106ac47d147a744b
+author Boris Goozman <boris@me.co.il> 1721387625 +0300
+committer Boris Goozman <boris@me.co.il> 1721387625 +0300
+
+i dont care
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git ls-tree f9ae1
+100644 blob ac5d76a0743c90233ebd0ae84a6faacde29cccee	.gitignore
+100644 blob 0588d046373858e0b60af74639d7385e4c94f8a7	functions.sh
+100644 blob fd14fae625e9c25eff23f948008817d0f5385055	helloworld.sh
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git cat-file blob 0588d
+function HW() {
+    echo hello world
+}
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git mv helloworld.sh helloworld_updated.sh 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ ll
+-rw-rw-r-- 1 boris boris   61 Jul 19 14:37 helloworld_updated.sh
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	renamed:    helloworld.sh -> helloworld_updated.sh
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git commit -m "rename file"
+[master 4fe4e29] rename file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename .venv/{helloworld.sh => helloworld_updated.sh} (100%)
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../.idea/workspace.xml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git rm ../.idea/
+fatal: not removing '../.idea/' recursively without -r
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git rm -r --cached ../.idea/
+rm '.idea/inspectionProfiles/profiles_settings.xml'
+rm '.idea/misc.xml'
+rm '.idea/modules.xml'
+rm '.idea/pythonProject.iml'
+rm '.idea/vcs.xml'
+rm '.idea/workspace.xml'
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ ls ../ -a
+.  ..  .git  .idea  .venv
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    ../.idea/inspectionProfiles/profiles_settings.xml
+	deleted:    ../.idea/misc.xml
+	deleted:    ../.idea/modules.xml
+	deleted:    ../.idea/pythonProject.iml
+	deleted:    ../.idea/vcs.xml
+	deleted:    ../.idea/workspace.xml
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git commit -m "removed IDE files from project"
+[master 9519dbf] removed IDE files from project
+ 6 files changed, 138 deletions(-)
+ delete mode 100644 .idea/inspectionProfiles/profiles_settings.xml
+ delete mode 100644 .idea/misc.xml
+ delete mode 100644 .idea/modules.xml
+ delete mode 100644 .idea/pythonProject.iml
+ delete mode 100644 .idea/vcs.xml
+ delete mode 100644 .idea/workspace.xml
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+
+nothing added to commit but untracked files present (use "git add" to track)
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ ls
+bin  helloworld_updated.sh  lib  pyvenv.cfg
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git rm helloworld_updated.sh 
+rm '.venv/helloworld_updated.sh'
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ ls
+bin  lib  pyvenv.cfg
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    helloworld_updated.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git reset -- helloworld_updated.sh
+Unstaged changes after reset:
+D	.venv/helloworld_updated.sh
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	deleted:    helloworld_updated.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git checkout helloworld_updated.sh
+Updated 1 path from the index
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ git status 
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+
+nothing added to commit but untracked files present (use "git add" to track)
+boris@2204:~/PycharmProjects/helloworld/pythonProject/.venv$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
