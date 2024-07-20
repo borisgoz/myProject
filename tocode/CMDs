@@ -20,3 +20,12 @@ git checkout <rev> -- <file>
 git checkout <rev>
 git checkout master
 
+git log
+git log --oneline
+git log -1 -p
+git log -S 'str'
+git log -- <file>
+
+git blame <rev> <file>
+git blame --reverse <rev>..<HEAD> -- <file> --> when line was deleted
+
