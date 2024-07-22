@@ -65,3 +65,21 @@ on linux
         prompt = false
 [mergetool "meld"]
          cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+
+--------------------
+
+git reflog
+git log -3 --oneline
+
+git reset -- file
+git reset <rev>
+
+git add file       --> add    file to   Staging Area (index)
+git reset -- file  --> remove file from Staging Area (index)
+
+Index ---------- Working Tree ----- Repository
+add/commit...    my-files           already commited and added files
+
+git ls-tree HEAD
+
+git reset --hard   --> reset all files to previus ver

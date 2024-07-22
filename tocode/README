@@ -1144,7 +1144,158 @@ index c69c34b..ecb92e6 100644
 boris@2204:~/my_local_git/.venv$ git difftool --dir-diff c38fa5~1..c38fa5
 boris@2204:~/my_local_git/.venv$ git difftool --dir-diff c38fa5^1..c38fa5
 
-boris@2204:~/my_local_git/.
+boris@2204:~/my_local_git/.venv$ ls -a
+.  ..  bin  .gitignore  helloworld_updated.sh  lib  pyvenv.cfg
+boris@2204:~/my_local_git/.venv$ git ls-tree HEAD
+100644 blob ac5d76a0743c90233ebd0ae84a6faacde29cccee	.gitignore
+100644 blob ecb92e6eef49fc05bf66d5d3359fc7a4965efb27	helloworld_updated.sh
+
+boris@2204:~/my_local_git/.venv$ nano helloworld_updated.sh 
+boris@2204:~/my_local_git/.venv$ git ls-files --stage 
+100644 ac5d76a0743c90233ebd0ae84a6faacde29cccee 0	.gitignore
+100644 7bc2d297e71d26c4f8d4d74e7351d1b90b406e16 0	helloworld_updated.sh
+boris@2204:~/my_local_git/.venv$ git log --oneline 
+c38fa51 (HEAD -> master) new commit
+9519dbf removed IDE files from project
+4fe4e29 rename file
+4002464 back to main
+4f6e77a i dont care
+843b53d update my file
+22dd358 verbus
+592bce7 function supporting
+c945634 function supporting
+8fad081 system
+3fd5466 cleanup2
+fedb2a7 cleanup
+5a7139f initial commit
+boris@2204:~/my_local_git/.venv$ cat ../.git/HEAD 
+ref: refs/heads/master
+boris@2204:~/my_local_git/.venv$ cat ../.git/refs/heads/master 
+c38fa513f8ee11e75973227c0a214f460f774e4d
+boris@2204:~/my_local_git/.venv$ git cat-file commit c38fa51
+tree e88a58c852e89077e3cdf2a890be9b39ff126a2d
+parent 9519dbfd9919f2a9a37cea7de6ca8016d969d0e0
+author Boris Goozman <boris@me.co.il> 1721515794 +0300
+committer Boris Goozman <boris@me.co.il> 1721515794 +0300
+new commit
+
+boris@2204:~/my_local_git/.venv$ git cat-file commit 9519db
+tree b96fb3c8c8379b17112cd42326a00fee31676ed5
+parent 4fe4e29f84c9e6432cbfed52865fcd40ec0991a1
+author Boris Goozman <boris@me.co.il> 1721390656 +0300
+committer Boris Goozman <boris@me.co.il> 1721390656 +0300
+removed IDE files from project
+
+boris@2204:~/my_local_git/.venv$ git cat-file commit 5a7139f
+tree b82a8551d613b58c2ad7281eae5c1d12492546a9
+author Boris Goozman <boris@me.co.il> 1721338836 +0300
+committer Boris Goozman <boris@me.co.il> 1721338836 +0300
+initial commit
+
+boris@2204:~/my_local_git/.venv$ cat ../.git/refs/heads/master 
+9519dbfd9919f2a9a37cea7de6ca8016d969d0e0
+boris@2204:~/my_local_git/.venv$ git log --oneline 
+9519dbf (HEAD -> master) removed IDE files from project
+4fe4e29 rename file
+4002464 back to main
+...
+boris@2204:~/my_local_git/.venv$ git status -s
+ M helloworld_updated.sh
+?? ../.idea/
+boris@2204:~/my_local_git/.venv$ git diff helloworld_updated.sh
+diff --git a/.venv/helloworld_updated.sh b/.venv/helloworld_updated.sh
+index c69c34b..7bc2d29 100644
+--- a/.venv/helloworld_updated.sh
++++ b/.venv/helloworld_updated.sh
+@@ -1,6 +1,4 @@
+ #!/bin/bash -x
+-function HW() {
+-    echo hello world
+-}
+-HW
+-#end
+\ No newline at end of file
++echo hello world 10
++echo hi bye
++#end
+boris@2204:~/my_local_git/.venv$ git log -3 --oneline 
+9519dbf (HEAD -> master) removed IDE files from project
+4fe4e29 rename file
+4002464 back to main
+
+boris@2204:~/my_local_git/.venv$ git reflog 
+9519dbf (HEAD -> master) HEAD@{0}: reset: moving to 9519dbf
+9519dbf (HEAD -> master) HEAD@{1}: reset: moving to 9519dbf
+c38fa51 HEAD@{2}: commit: new commit
+9519dbf (HEAD -> master) HEAD@{3}: checkout: moving from master to master
+9519dbf (HEAD -> master) HEAD@{4}: checkout: moving from 4f6e77a8d74d706b0ddf8fa9de0c8f4f81fb85cd to master
+4f6e77a HEAD@{5}: checkout: moving from master to 40024^
+9519dbf (HEAD -> master) HEAD@{6}: checkout: moving from 58883bdc6cb33f0969643c59a3a57f4515d3a431 to master
+58883bd HEAD@{7}: commit: removed code left only with functions
+4f6e77a HEAD@{8}: checkout: moving from master to 400246^
+9519dbf (HEAD -> master) HEAD@{9}: checkout: moving from 4f6e77a8d74d706b0ddf8fa9de0c8f4f81fb85cd to master
+4f6e77a HEAD@{10}: checkout: moving from master to 400246^
+9519dbf (HEAD -> master) HEAD@{11}: commit: removed IDE files from project
+4fe4e29 HEAD@{12}: commit: rename file
+4002464 HEAD@{13}: commit: back to main
+4f6e77a HEAD@{14}: commit: i dont care
+843b53d HEAD@{15}: commit: update my file
+22dd358 HEAD@{16}: commit: verbus
+592bce7 HEAD@{17}: commit: function supporting
+c945634 HEAD@{18}: commit: function supporting
+8fad081 HEAD@{19}: commit: system
+3fd5466 HEAD@{20}: commit: cleanup2
+fedb2a7 HEAD@{21}: commit: cleanup
+5a7139f HEAD@{22}: commit (initial): initial commit
+
+boris@2204:~/my_local_git/.venv$ git reset c38fa51
+Unstaged changes after reset:
+M	.venv/helloworld_updated.sh
+boris@2204:~/my_local_git/.venv$ git log -3 --oneline 
+c38fa51 (HEAD -> master) new commit
+9519dbf removed IDE files from project
+4fe4e29 rename file
+
+boris@2204:~/my_local_git/.venv$ cat helloworld_updated.sh 
+#!/bin/bash -x
+echo hello world 10
+echo hi bye
+#end
+boris@2204:~/my_local_git/.venv$ git reset --hard 9519dbf
+HEAD is now at 9519dbf removed IDE files from project
+boris@2204:~/my_local_git/.venv$ cat helloworld_updated.sh 
+#!/bin/bash -x
+function HW() {
+    echo hello world
+}
+HW
+#end
+boris@2204:~/my_local_git/.venv$ git status 
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+nothing added to commit but untracked files present (use "git add" to track)
+boris@2204:~/my_local_git/.venv$ git status -s
+?? ../.idea/
+boris@2204:~/my_local_git/.venv$ git reset --hard c38fa51
+HEAD is now at c38fa51 new commit
+boris@2204:~/my_local_git/.venv$ cat helloworld_updated.sh 
+#!/bin/bash -x
+echo hello world 10
+#end
+boris@2204:~/my_local_git/.venv$ git log -3 --oneline 
+c38fa51 (HEAD -> master) new commit
+9519dbf removed IDE files from project
+4fe4e29 rename file
+boris@2204:~/my_local_git/.venv$ git status -s
+?? ../.idea/
+boris@2204:~/my_local_git/.venv$ 
+
+-10:00
+
+
+
 
 
 
