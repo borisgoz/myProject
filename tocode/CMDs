@@ -83,3 +83,30 @@ add/commit...    my-files           already commited and added files
 git ls-tree HEAD
 
 git reset --hard   --> reset all files to previus ver
+
+# move HEAD to rev
+# reset index to rev
+git reset <rev>
+
+# reset index + working tree. files to prev. ver.
+git reset --hard <rev>
+
+# dont touch index + working tree. HEAD--
+git reset --soft <rev>
+
+git reset HEAD^
+git reset HEAD~1 --> mevatel last commit
+
+-----------------------------------
+
+#update last commit
+git commit --amend -m "New commit message"
+git push --force origin HEAD
+
+----
+
+git branch <branch>
+git checkout <branch>
+git checkout -b <branch>
+git merge-branc <branch> <branch>
+

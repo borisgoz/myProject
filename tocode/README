@@ -519,7 +519,7 @@ Date:   Fri Jul 19 14:58:06 2024 +0300
 
 boris@2204:~/my_local_git/.venv$ git log --before=2.minutes
 commit 9519dbfd9919f2a9a37cea7de6ca8016d969d0e0 (HEAD -> master)
-Author: Boris Goozman <borisg1@rafael.co.il>
+Author: Boris Goozman <borisg1@me.co.il>
 Date:   Fri Jul 19 15:04:16 2024 +0300
 
     removed IDE files from project
@@ -791,7 +791,7 @@ index fd14fae..c69c34b 100644
 boris@2204:~/my_local_git/.venv$ git log -n 1 --before=14.days.ago
 boris@2204:~/my_local_git/.venv$ git log -n 1 --before=1.days.ago
 commit 9519dbfd9919f2a9a37cea7de6ca8016d969d0e0 (HEAD -> master)
-Author: Boris Goozman <borisg1@rafael.co.il>
+Author: Boris Goozman <borisg1@me.co.il>
 Date:   Fri Jul 19 15:04:16 2024 +0300
 
     removed IDE files from project
@@ -847,7 +847,7 @@ boris@2204:~/my_local_git/.venv$ git log --oneline -- functions.sh
 
 boris@2204:~/my_local_git/.venv$ git log -p -1 4002464
 commit 4002464463fb843c10c9a3b7346119af431b42ae
-Author: Boris Goozman <borisg1@rafael.co.il>
+Author: Boris Goozman <borisg1@me.co.il>
 Date:   Fri Jul 19 14:43:47 2024 +0300
 
     back to main
@@ -1292,7 +1292,296 @@ boris@2204:~/my_local_git/.venv$ git status -s
 ?? ../.idea/
 boris@2204:~/my_local_git/.venv$ 
 
--10:00
+-----
+#update last commit
+borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ git log -3 --oneline 
+6d632da (HEAD -> main, origin/main, origin/HEAD)  middle 11 lesson
+880ccec after 11 lesson
+098fbe9 after 10 lesson
+borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ git commit --amend -m "New commit message"
+##borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ git commit --amend --> nano edit
+[main 4fdd23f]  middle 12 lesson
+ Date: Tue Jul 23 00:21:59 2024 +0300
+ 2 files changed, 170 insertions(+), 1 deletion(-)
+borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ git status 
+On branch main
+Your branch and 'origin/main' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+nothing to commit, working tree clean
+
+borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ git push --force origin HEAD
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 1.46 KiB | 1.46 MiB/s, done.
+Total 5 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:borisgoz/myProject.git
+ + 6d632da...4fdd23f HEAD -> main (forced update)
+borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ git status 
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ git log -3 --oneline 
+4fdd23f (HEAD -> main, origin/main, origin/HEAD)  middle 12 lesson
+880ccec after 11 lesson
+098fbe9 after 10 lesson
+borisg1@D-C-BORIS-L-RF1:~/my_github/myProject$ 
+
+-----
+
+#git reset soft
+git reset --mixed --> default
+boris@2204:~/my_local_git/.venv$ nano helloworld_updated.sh
+boris@2204:~/my_local_git/.venv$ git add helloworld_updated.sh 
+boris@2204:~/my_local_git/.venv$ git status -s
+M  helloworld_updated.sh
+?? ../.idea/
+## M --> changes to be commited
+
+boris@2204:~/my_local_git/.venv$ git log -2 --oneline 
+c38fa51 (HEAD -> master) new commit
+9519dbf removed IDE files from project
+boris@2204:~/my_local_git/.venv$ git reset c38fa51
+Unstaged changes after reset:
+M	.venv/helloworld_updated.sh
+boris@2204:~/my_local_git/.venv$ git status -s
+ M helloworld_updated.sh
+?? ../.idea/
+# not in index. not update file. must add and commit
+
+##back
+boris@2204:~/my_local_git/.venv$ git add helloworld_updated.sh 
+boris@2204:~/my_local_git/.venv$ git reset --soft c38fa51
+boris@2204:~/my_local_git/.venv$ git status -s
+M  helloworld_updated.sh
+?? ../.idea/
+# green. in index
+
+boris@2204:~/my_local_git/.venv$ echo > helloworld_updated.sh 
+boris@2204:~/my_local_git/.venv$ git add helloworld_updated.sh 
+boris@2204:~/my_local_git/.venv$ git status -s
+M  helloworld_updated.sh
+?? ../.idea/
+boris@2204:~/my_local_git/.venv$ git commit -m "del all from file"
+[master f12da2a] del all from file
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+boris@2204:~/my_local_git/.venv$ git log -3 --oneline 
+f12da2a (HEAD -> master) del all from file
+c38fa51 new commit
+9519dbf removed IDE files from project
+boris@2204:~/my_local_git/.venv$ git reset c38fa51
+Unstaged changes after reset:
+M	.venv/helloworld_updated.sh
+boris@2204:~/my_local_git/.venv$ git diff helloworld_updated.sh
+diff --git a/.venv/helloworld_updated.sh b/.venv/helloworld_updated.sh
+index ecb92e6..8b13789 100644
+--- a/.venv/helloworld_updated.sh
++++ b/.venv/helloworld_updated.sh
+@@ -1,3 +1 @@
+-#!/bin/bash -x
+-echo hello world 10
+-#end
++
+boris@2204:~/my_local_git/.venv$ git checkout helloworld_updated.sh
+Updated 1 path from the index
+boris@2204:~/my_local_git/.venv$ git log -3 --oneline 
+c38fa51 (HEAD -> master) new commit
+9519dbf removed IDE files from project
+4fe4e29 rename file
+boris@2204:~/my_local_git/.venv$ nano helloworld_updated.sh
+boris@2204:~/my_local_git/.venv$ git commit -am "add footer"
+[master 109bc0c] add footer
+ 1 file changed, 1 insertion(+)
+boris@2204:~/my_local_git/.venv$ git log -3 --oneline 
+109bc0c (HEAD -> master) add footer
+c38fa51 new commit
+9519dbf removed IDE files from project
+boris@2204:~/my_local_git/.venv$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .gitignore
+	modified:   helloworld_updated.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+	bin/
+	lib/
+	pyvenv.cfg
+
+no changes added to commit (use "git add" and/or "git commit -a")
+## checkout to all files from Modified
+boris@2204:~/my_local_git/.venv$ git reset --hard 
+HEAD is now at 109bc0c add footer
+boris@2204:~/my_local_git/.venv$ git status -s
+?? ../.idea/
+boris@2204:~/my_local_git/.venv$ touch a b c d e f
+boris@2204:~/my_local_git/.venv$ ls
+a  b  bin  c  d  e  f  helloworld_updated.sh  lib  pyvenv.cfg
+boris@2204:~/my_local_git/.venv$ git status -s
+?? ../.idea/
+?? a
+?? b
+?? c
+?? d
+?? e
+?? f
+boris@2204:~/my_local_git/.venv$ git reset --hard
+HEAD is now at 109bc0c add footer
+boris@2204:~/my_local_git/.venv$ git status -s
+?? ../.idea/
+?? a
+?? b
+?? c
+?? d
+?? e
+?? f
+boris@2204:~/my_local_git/.venv$ git clean -nd
+Would remove a
+Would remove b
+Would remove c
+Would remove d
+Would remove e
+Would remove f
+boris@2204:~/my_local_git/.venv$ # with dirs
+boris@2204:~/my_local_git/.venv$ git clean -f
+Removing a
+Removing b
+Removing c
+Removing d
+Removing e
+Removing f
+boris@2204:~/my_local_git/.venv$ git status -s
+?? ../.idea/
+boris@2204:~/my_local_git/.venv$ ls
+bin  helloworld_updated.sh  lib  pyvenv.cfg
+boris@2204:~/my_local_git/.venv$ 
+
+# ex1
+git log --oneline
+git show HEAD              
+
+#ex2
+git log -S 'pass' -p  
+
+#ex3
+git reflog
+git ls-tree 2b9de
+git cat-file blob 1a24e
+
+---
+
+branch
+boris@2204:~/my_local_git/.venv$ git branch 
+* master
+boris@2204:~/my_local_git/.venv$ git log --oneline -3
+109bc0c (HEAD -> master) add footer
+c38fa51 new commit
+9519dbf removed IDE files from project
+boris@2204:~/my_local_git/.venv$ git branch dev
+boris@2204:~/my_local_git/.venv$ git branch 
+  dev
+* master
+boris@2204:~/my_local_git/.venv$ git checkout dev 
+Switched to branch 'dev'
+boris@2204:~/my_local_git/.venv$ git branch 
+* dev
+  master
+boris@2204:~/my_local_git/.venv$ cat ../.git/HEAD 
+ref: refs/heads/dev
+boris@2204:~/my_local_git/.venv$ checkout master 
+Switched to branch 'master'
+boris@2204:~/my_local_git/.venv$ cat ../.git/HEAD 
+ref: refs/heads/master
+boris@2204:~/my_local_git/.venv$ ls ../.git/refs/heads/
+dev  master
+boris@2204:~/my_local_git/.venv$ cat ../.git/refs/heads/*
+109bc0c40c2fb6085b175e4749539414ccde9c17
+109bc0c40c2fb6085b175e4749539414ccde9c17
+boris@2204:~/my_local_git/.venv$ git log --oneline -1
+109bc0c (HEAD -> master, dev) add footer
+boris@2204:~/my_local_git/.venv$ git branch 
+  dev
+* master
+boris@2204:~/my_local_git/.venv$ nano helloworld_updated.sh 
+2: ### I'm on master
+boris@2204:~/my_local_git/.venv$ git status 
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   helloworld_updated.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+boris@2204:~/my_local_git/.venv$ git commit -am 'master commit'
+[master 9deb863] master commit
+ 1 file changed, 1 insertion(+)
+boris@2204:~/my_local_git/.venv$ git log --oneline -3
+9deb863 (HEAD -> master) master commit
+109bc0c (dev) add footer
+c38fa51 new commit
+boris@2204:~/my_local_git/.venv$ cat ../.git/refs/heads/*
+109bc0c40c2fb6085b175e4749539414ccde9c17
+9deb863ad0b4b6d0f8271e4ef5da48552d4b631d
+boris@2204:~/my_local_git/.venv$ git checkout dev
+Switched to branch 'dev'
+boris@2204:~/my_local_git/.venv$ git log --oneline -3
+109bc0c (HEAD -> dev) add footer
+c38fa51 new commit
+9519dbf removed IDE files from project
+boris@2204:~/my_local_git/.venv$ nano helloworld_updated.sh 
+2: ### I'm on dev
+boris@2204:~/my_local_git/.venv$ git commit -am 'dev commit'
+[dev defb1ce] dev commit
+ 1 file changed, 1 insertion(+)
+boris@2204:~/my_local_git/.venv$ git log --oneline -3
+defb1ce (HEAD -> dev) dev commit
+109bc0c add footer
+c38fa51 new commit
+#parrent
+boris@2204:~/my_local_git/.venv$ git merge-base master dev 
+109bc0c40c2fb6085b175e4749539414ccde9c17
+boris@2204:~/my_local_git/.venv$ git log --oneline -2
+defb1ce (HEAD -> dev) dev commit
+109bc0c add footer
+boris@2204:~/my_local_git/.venv$ git checkout -b mycoolbranch
+##create and move to
+Switched to a new branch 'mycoolbranch'
+boris@2204:~/my_local_git/.venv$ git checkout -b mycoolbranch --> git branch; git checkout 
+boris@2204:~/my_local_git/.venv$ git branch 
+  dev
+  master
+* mycoolbranch
+boris@2204:~/my_local_git/.venv$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
