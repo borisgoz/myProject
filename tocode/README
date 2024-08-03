@@ -1565,8 +1565,64 @@ boris@2204:~/my_local_git/.venv$ git branch
 * mycoolbranch
 boris@2204:~/my_local_git/.venv$ 
 
+merge
+boris@2204:~/my_local_git/.venv$ git branch
+  dev
+  master
+* mycoolbranch
+boris@2204:~/my_local_git/.venv$ git checkout master
+Switched to branch 'master'
+boris@2204:~/my_local_git/.venv$ git branch
+  dev
+* master
+  mycoolbranch
+boris@2204:~/my_local_git/.venv$ git branch -d mycoolbranch 
+error: The branch 'mycoolbranch' is not fully merged.
+If you are sure you want to delete it, run 'git branch -D mycoolbranch'.
+boris@2204:~/my_local_git/.venv$ git branch -D mycoolbranch 
+Deleted branch mycoolbranch (was defb1ce).
+boris@2204:~/my_local_git/.venv$ git branch -D dev 
+Deleted branch dev (was defb1ce).
+boris@2204:~/my_local_git/.venv$ git branch 
+* master
+boris@2204:~/my_local_git/.venv$ git checkout -b ff
+Switched to a new branch 'ff'
+boris@2204:~/my_local_git/.venv$ git log --oneline -2
+9deb863 (HEAD -> ff, master) master commit
+109bc0c add footer
+boris@2204:~/my_local_git/.venv$ nano helloworld_updated.sh
+2: ### I'm on ff branch 
+boris@2204:~/my_local_git/.venv$ git commit -am 'changed commit line from master -> ff'
+[ff f93e96d] changed commit line from master -> ff
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+boris@2204:~/my_local_git/.venv$ git log --oneline -3
+f93e96d (HEAD -> ff) changed commit line from master -> ff
+9deb863 (master) master commit
+109bc0c add footer
+boris@2204:~/my_local_git/.venv$ git checkout master
+Switched to branch 'master'
+boris@2204:~/my_local_git/.venv$ git log --oneline -3
+9deb863 (HEAD -> master) master commit
+109bc0c add footer
+c38fa51 new commit
+boris@2204:~/my_local_git/.venv$ git merge ff
+Updating 9deb863..f93e96d
+Fast-forward
+ .venv/helloworld_updated.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+boris@2204:~/my_local_git/.venv$ git log --oneline -3
+f93e96d (HEAD -> master, ff) changed commit line from master -> ff
+9deb863 master commit
+109bc0c add footer
+boris@2204:~/my_local_git/.venv$ cat helloworld_updated.sh 
+#!/bin/bash -x
+### I'm on ff branch
+echo hello world 10
+echo "-----"
+#end
+boris@2204:~/my_local_git/.venv$ 
 
-
+-14:43
 
 
 
