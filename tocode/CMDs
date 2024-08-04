@@ -113,10 +113,21 @@ git merge-branc <branch> <branch>
 ---
 
 #mizug 
-fast forward merge
-merging changes in different files
-merging changes in different lines
-merging conflicting changes
+1. fast forward merge
+git merge --ff-only <branch>
+git merge <branch>
+
+2. merging changes in different files
+create a new merge commit
+git merge <branch>
+
+3. merging changes in different lines
+git merge <branch>
+
+4. merging conflicting changes
+git merge <branch>
+git mergetool   --> diff-gui
+git commit
 
 git merge --ff-only <branch>
 git merge --no-ff <branch>
