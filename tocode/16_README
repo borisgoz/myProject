@@ -1,0 +1,25 @@
+## Git Workflow
+
+boris@2204:~/my_local_git/.venv$ git log --oneline -4
+eca10b8 (HEAD -> master) Merge branch 'dev'
+bf62cc5 took over the project
+655bd86 (dev) john took over
+3012047 Merge branch 'dev'
+
+boris@2204:~/my_local_git/.venv$ git tag 1.0.0
+
+boris@2204:~/my_local_git/.venv$ git log --oneline -4
+eca10b8 (HEAD -> master, tag: 1.0.0) Merge branch 'dev'
+bf62cc5 took over the project
+655bd86 (dev) john took over
+3012047 Merge branch 'dev'
+
+boris@2204:~/my_local_git/.venv$ git log --oneline -4 1.0.0
+eca10b8 (HEAD -> master, tag: 1.0.0) Merge branch 'dev'
+bf62cc5 took over the project
+655bd86 (dev) john took over
+3012047 Merge branch 'dev'
+
+boris@2204:~/my_local_git/.venv$ git diff 1.0.0 
+
+boris@2204:~/my_local_git/.venv$
