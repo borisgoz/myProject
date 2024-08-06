@@ -1,0 +1,46 @@
+## git diff
+boris@2204:~/my_local_git/.venv$ git diff 
+
+boris@2204:~/my_local_git/.venv$ git diff master 
+
+boris@2204:~/my_local_git/.venv$ git diff dev 
+diff --git a/.venv/readme.txt b/.venv/readme.txt
+index dd802f5..a9e8d84 100644
+--- a/.venv/readme.txt
++++ b/.venv/readme.txt
+...
+
+boris@2204:~/my_local_git/.venv$ git diff master dev
+diff --git a/.venv/readme.txt b/.venv/readme.txt
+index a9e8d84..dd802f5 100644
+--- a/.venv/readme.txt
++++ b/.venv/readme.txt
+...
+
+diff --git a/.venv/readme.txt.orig b/.venv/readme.txt.orig
+deleted file mode 100644
+index fdfc8b7..0000000
+--- a/.venv/readme.txt.orig
++++ /dev/null
+...
+
+boris@2204:~/my_local_git/.venv$ git diff master dev -- readme.txt
+diff --git a/.venv/readme.txt b/.venv/readme.txt
+index a9e8d84..dd802f5 100644
+--- a/.venv/readme.txt
++++ b/.venv/readme.txt
+@@ -1,7 +1,7 @@
+ # hello world project
+ 
+ ## author
+-Mr. BIG
++john
+ 
+ ## installation
+ 
+# get diffs in MELD
+boris@2204:~/my_local_git/.venv$ git difftool  master dev -- readme.txt
+
+boris@2204:~/my_local_git/.venv$ git difftool -d master dev
+
+boris@2204:~/my_local_git/.venv$ 

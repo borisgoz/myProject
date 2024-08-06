@@ -1,0 +1,13 @@
+# diff index with branch
+# before git commit -am
+$ git diff <branch>
+
+# diff two branches
+$ git diff <branch> <branch>
+
+# GUI diff a file
+$ git difftool <branch> <branch> -- file
+
+# GUI diff entire directory
+$ git difftool -d <branch> <branch>
+ 
