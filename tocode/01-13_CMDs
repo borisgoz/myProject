@@ -70,32 +70,3 @@ git reset HEAD~1 --> mevatel last commit
 #update last commit
 git commit --amend -m "New commit message"
 git push --force origin HEAD
-
-----
-
-git branch <branch>
-git checkout <branch>
-git checkout -b <branch>
-git merge-branc <branch> <branch>
-
----
-
-#mizug 
-1. fast forward merge
-git merge --ff-only <branch>
-git merge <branch>
-
-2. merging changes in different files
-create a new merge commit
-git merge <branch>
-
-3. merging changes in different lines
-git merge <branch>
-
-4. merging conflicting changes
-git merge <branch>
-git mergetool   --> diff-gui
-git commit
-
-git merge --ff-only <branch>
-git merge --no-ff <branch>

@@ -1,0 +1,5 @@
+# branch
+$ git branch <branch>
+$ git checkout <branch>
+$ git checkout -b <branch>
+$ git merge-branc <branch> <branch>
