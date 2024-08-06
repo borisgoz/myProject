@@ -1,0 +1,36 @@
+[user]
+	email = me@co.il
+	name = Boris
+
+# Add the following to your .gitconfig file on linux
+[diff]
+        tool = meld
+[difftool]
+        prompt = false
+[difftool "meld"]
+        cmd = meld "$LOCAL" "$REMOTE"
+[merge]
+        tool = meld
+[mergetool]
+        prompt = false
+[mergetool "meld"]
+         cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+
+--------------------
+
+## settings to use diffmerge for win
+[merge]
+    tool = diffmerge
+[diff]
+    tool = diffmerge
+[mergetool]
+    prompt = false
+[difftool]
+    prompt = false
+[difftool “diffmerge”]
+    cmd = C:/Program\ Files/SourceGear/Common/DiffMerge/sgdm.exe “$LOCAL” “$REMOTE”
+[mergetool “diffmerge”]
+    cmd = C:/Program\ Files/SourceGear/Common/DiffMerge/sgdm.exe -merge -result="$MERGED" “$LOCAL” “$BASE” “$REMOTE
+
+-----------
+
