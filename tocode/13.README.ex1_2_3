@@ -1,0 +1,12 @@
+# ex1
+git log --oneline
+git show HEAD              
+
+#ex2
+git log -S 'pass' -p  
+
+#ex3
+git reflog
+git ls-tree 2b9de
+git cat-file blob 1a24e
+

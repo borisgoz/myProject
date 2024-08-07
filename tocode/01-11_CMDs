@@ -1,0 +1,35 @@
+git init
+git add file
+git add .
+git commit -m "commit"
+git log
+
+git add <file>|<dir>
+git reset <file>|<dir>
+git commit
+
+git add file
+git rm file  -- delete file by commit. file still be
+git mv old-file new-file
+git rm -r  --> rmdir -r
+git rm -r --cached --> from cashe
+
+git commit -am 
+
+git checkout <rev> -- <file>
+git checkout <rev>
+git checkout master
+
+git log
+git log --oneline
+git log -1 -p
+git log -S 'str'
+git log -- <file>
+
+git blame <rev> <file>
+git blame --reverse <rev>..<HEAD> -- <file> --> when line was deleted
+
+git difftool
+git diff <rev>
+git diff <rev> <rev> -- file
+git diff --dirdiff

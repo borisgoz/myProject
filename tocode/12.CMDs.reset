@@ -1,0 +1,35 @@
+#git.reset
+$ git reflog
+$ git log -3 --oneline
+
+$ git reset -- file
+$ git reset <rev>
+
+$ git add file       --> add    file to   Staging Area (index)
+$ git reset -- file  --> remove file from Staging Area (index)
+
+Index ---------- Working Tree ----- Repository
+add/commit...    my-files           already commited and added files
+
+$ git ls-tree HEAD
+
+$ git reset --hard   --> reset all files to previus ver
+
+# move HEAD to rev
+# reset index to rev
+$ git reset <rev>
+
+# reset index + working tree. files to prev. ver.
+$ git reset --hard <rev>
+
+# dont touch index + working tree. HEAD--
+$ git reset --soft <rev>
+
+$ git reset HEAD^
+$ git reset HEAD~1 --> mevatel last commit
+
+-----------------------------------
+
+#update last commit
+$ git commit --amend -m "New commit message"
+$ git push --force origin HEAD
