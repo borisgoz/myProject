@@ -1,0 +1,17 @@
+# saving commits in detached head
+
+$ git checkout <commit>
+$ ...
+$ git commit
+
+... Ooops ...
+
+# create a new branch pointing to revision
+$ git branch <branch> <revision>
+
+# move existing branch to revision
+$ git branch -f <branch> <revision>
+
+$ git diff <branch> <branch>
+$ git diff --summary <branch> <branch>   --> list foles
+$ git difftool <branch> <branch>

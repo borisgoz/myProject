@@ -1,0 +1,132 @@
+# detached HEAD state
+
+boris@2204:~/my_local_git/.venv$ git log --oneline -15 --graph 
+* 16b3409 (HEAD -> master) conflict dummy
+*   eca10b8 (tag: 1.0.0) Merge branch 'dev'
+|\  
+| * 655bd86 (dev) john took over
+* | bf62cc5 took over the project
+* | 3012047 Merge branch 'dev'
+|\| 
+| * 23253d4 add author to readme
+* | 5bff8f3 ADD website
+|/  
+* d72eb1f add readme file
+*   93ef2f0 Merge branch 'dev'
+|\  
+| * 32bcbb6 ADD trees
+* | 2ca78d8 ADD flowers
+|/  
+* f93e96d changed commit line from master -> ff
+* 9deb863 master commit
+* 109bc0c add footer
+* c38fa51 new commit
+
+boris@2204:~/my_local_git/.venv$
+
+# and to add footer
+# NOT git checkout <branch>
+# git checkout <revision>
+# its for looking but not for updating
+
+boris@2204:~/my_local_git/.venv$ git checkout 109bc0c
+Note: switching to '109bc0c'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 109bc0c add footer
+
+boris@2204:~/my_local_git/.venv$ ls
+bin  helloworld_updated.sh  lib  pyvenv.cfg
+
+boris@2204:~/my_local_git/.venv$ nano password.sh
+#!/bin/bash
+echo what is a password
+read PASS
+echo PASS is $PASS
+#end
+
+boris@2204:~/my_local_git/.venv$ chmod +x password.sh 
+
+boris@2204:~/my_local_git/.venv$ git status 
+HEAD detached at 109bc0c
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../.idea/
+	password.sh
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+boris@2204:~/my_local_git/.venv$ git add password.sh 
+
+boris@2204:~/my_local_git/.venv$ git commit -m 'new program'
+[detached HEAD 9071f0b] new program
+ 1 file changed, 5 insertions(+)
+ create mode 100755 .venv/password.sh
+
+boris@2204:~/my_local_git/.venv$ git log --oneline -4
+9071f0b (HEAD) new program
+109bc0c add footer
+c38fa51 new commit
+9519dbf removed IDE files from project
+
+# back to master
+
+boris@2204:~/my_local_git/.venv$ git checkout master
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  9071f0b new program
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> 9071f0b
+
+Switched to branch 'master'
+
+boris@2204:~/my_local_git/.venv$ cat ../.git/refs/heads/master 
+16b3409137af8571f732d31312b905b8b15fe176
+
+boris@2204:~/my_local_git/.venv$ git branch secret-branch 9071f0b
+
+boris@2204:~/my_local_git/.venv$ git branch 
+  dev
+* master
+  secret-branch
+
+boris@2204:~/my_local_git/.venv$ git log --oneline -2 secret-branch 
+9071f0b (secret-branch) new program
+109bc0c add footer
+
+boris@2204:~/my_local_git/.venv$ git diff master secret-branch 
+diff --git a/.venv/flowers.txt b/.venv/flowers.txt
+deleted file mode 100644
+index 8d1e11f..0000000
+--- a/.venv/flowers.txt
++++ /dev/null
+...
+
+boris@2204:~/my_local_git/.venv$ git diff --summary master secret-branch 
+ delete mode 100644 .venv/flowers.txt
+ create mode 100755 .venv/password.sh
+ delete mode 100644 .venv/readme.txt
+ delete mode 100644 .venv/readme.txt.orig
+ delete mode 100644 .venv/trees.txt
+
+boris@2204:~/my_local_git/.venv$ git difftool -d master secret-branch 
+
+boris@2204:~/my_local_git/.venv$
